@@ -31,7 +31,7 @@ export default class Widget extends Component {
 		if (!isChatOpen && (isMobile || conf.alwaysUseFloatingButton)) {
 			wrapperStyle = { ...mobileClosedWrapperStyle}; // closed mobile floating button
 		} else if (!isMobile){
-			wrapperStyle = (conf.closedStyle === 'chat' || isChatOpen || this.wasChatOpened()) ?
+			wrapperStyle = (isChatOpen || this.wasChatOpened()) ?
 				(isChatOpen) ?
 					{ ...desktopWrapperStyle, ...wrapperWidth} // desktop mode, button style
 					:
@@ -54,14 +54,14 @@ export default class Widget extends Component {
 
 					:
 
-					(conf.closedStyle === 'chat' || isChatOpen || this.wasChatOpened()) ?
+					(isChatOpen || this.wasChatOpened()) ?
 						(isChatOpen ?
 							<div style={{background: conf.mainColor, ...desktopTitleStyle}} onClick={this.onClick}>
 								<div style={{
 									display: 'flex', alignItems: 'center', padding: '0px 30px 0px 0px',
 									fontSize: '15px', fontWeight: 'normal'
 								}}>
-									{isChatOpen ? conf.titleOpen : conf.titleClosed}
+									{conf.title}
 								</div>
 								<ArrowIcon isOpened={isChatOpen}/>
 							</div> : <ChatTitleMsg onClick={this.onClick} conf={conf}/>)
@@ -95,7 +95,7 @@ export default class Widget extends Component {
 
     setCookie = () => {
     	let date = new Date();
-    	let expirationTime = parseInt(this.props.conf.cookieExpiration);
+    	let expirationTime = parseInt(this.props.conf.cookieValidInDays);
     	date.setTime(date.getTime() + (expirationTime * 24 * 60 * 60 * 1000));
 
     	document.cookie = `chatwasopened=1; expires=${date.toGMTString()}; path=/`;
