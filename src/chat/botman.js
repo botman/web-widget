@@ -2,13 +2,13 @@ import axios from 'axios';
 
 class BotMan {
 
-	setUserId(userId) {
-		this.userId = userId;
-	}
+    setUserId(userId) {
+        this.userId = userId;
+    }
 
-	setChatServer(chatServer) {
-		this.chatServer = chatServer;
-	}
+    setChatServer(chatServer) {
+        this.chatServer = chatServer;
+    }
 
     callAPI = (text, interactive = false, attachment = null, perMessageCallback, callback) => {
     	let data = new FormData();

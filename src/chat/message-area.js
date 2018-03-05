@@ -8,10 +8,10 @@ import ListType from "./messages/list";
 const dayInMillis = 60 * 60 * 24 * 1000;
 
 const messageTypes = {
-	actions: ActionType,
-	buttons: ButtonsType,
-	list: ListType,
-	text: TextType
+    actions: ActionType,
+    buttons: ButtonsType,
+    list: ListType,
+    text: TextType
 };
 
 export default class MessageArea extends Component {

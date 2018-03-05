@@ -33,7 +33,7 @@ export default class ListType extends Component {
                 <p>{element.title}</p>
                 <p>{element.subtitle}</p>
                 {elementButtons}
-            </div>
+            </div>;
         });
 
         return (

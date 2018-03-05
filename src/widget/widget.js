@@ -5,86 +5,86 @@ import ChatTitleMsg from './chat-title-msg';
 import ArrowIcon from './arrow-icon';
 import Api from './api';
 import {
-	desktopTitleStyle,
-	desktopWrapperStyle,
-	mobileOpenWrapperStyle,
-	mobileClosedWrapperStyle,
-	desktopClosedWrapperStyleChat
+    desktopTitleStyle,
+    desktopWrapperStyle,
+    mobileOpenWrapperStyle,
+    mobileClosedWrapperStyle,
+    desktopClosedWrapperStyleChat
 } from './style';
 
 export default class Widget extends Component {
 
-	constructor() {
-		super();
-		this.state.isChatOpen = false;
-		this.state.pristine = true;
-		this.state.wasChatOpened = this.wasChatOpened();
-	}
+    constructor() {
+        super();
+        this.state.isChatOpen = false;
+        this.state.pristine = true;
+        this.state.wasChatOpened = this.wasChatOpened();
+    }
 
-	componentDidMount() {
-		window.botmanChatWidget = new Api(this);
-	}
+    componentDidMount() {
+        window.botmanChatWidget = new Api(this);
+    }
 
-	render({conf, isMobile}, {isChatOpen, pristine}) {
+    render({conf, isMobile}, {isChatOpen, pristine}) {
 
-		const wrapperWidth = {width: isMobile ? conf.mobileWidth : conf.desktopWidth};
-		const desktopHeight = (window.innerHeight - 100 < conf.desktopHeight) ? window.innerHeight - 90 : conf.desktopHeight;
-		conf.wrapperHeight = desktopHeight;
+        const wrapperWidth = {width: isMobile ? conf.mobileWidth : conf.desktopWidth};
+        const desktopHeight = (window.innerHeight - 100 < conf.desktopHeight) ? window.innerHeight - 90 : conf.desktopHeight;
+        conf.wrapperHeight = desktopHeight;
 
-		let wrapperStyle;
+        let wrapperStyle;
 
-		if (!isChatOpen && (isMobile || conf.alwaysUseFloatingButton)) {
-			wrapperStyle = { ...mobileClosedWrapperStyle}; // closed mobile floating button
-		} else if (!isMobile){
-			wrapperStyle = (isChatOpen || this.wasChatOpened()) ?
-				(isChatOpen) ?
-					{ ...desktopWrapperStyle, ...wrapperWidth} // desktop mode, button style
-					:
-					{ ...desktopClosedWrapperStyleChat}
-				:
-				{ ...desktopClosedWrapperStyleChat}; // desktop mode, chat style
-		} else {
-			wrapperStyle = mobileOpenWrapperStyle; // open mobile wrapper should have no border
-		}
+        if (!isChatOpen && (isMobile || conf.alwaysUseFloatingButton)) {
+            wrapperStyle = { ...mobileClosedWrapperStyle}; // closed mobile floating button
+        } else if (!isMobile){
+            wrapperStyle = (isChatOpen || this.wasChatOpened()) ?
+                (isChatOpen) ?
+                    { ...desktopWrapperStyle, ...wrapperWidth} // desktop mode, button style
+                    :
+                    { ...desktopClosedWrapperStyleChat}
+                :
+                { ...desktopClosedWrapperStyleChat}; // desktop mode, chat style
+        } else {
+            wrapperStyle = mobileOpenWrapperStyle; // open mobile wrapper should have no border
+        }
 
 
-		return (
+        return (
 
-			<div style={wrapperStyle}>
+            <div style={wrapperStyle}>
 
-				{/* Open/close button */}
-				{(isMobile || conf.alwaysUseFloatingButton) && !isChatOpen ?
+                {/* Open/close button */}
+                {(isMobile || conf.alwaysUseFloatingButton) && !isChatOpen ?
 
-					<ChatFloatingButton onClick={this.toggle} conf={conf}/>
+                    <ChatFloatingButton onClick={this.toggle} conf={conf}/>
 
-					:
+                    :
 
-					(isChatOpen || this.wasChatOpened()) ?
-						(isChatOpen ?
-							<div style={{background: conf.mainColor, ...desktopTitleStyle}} onClick={this.toggle}>
-								<div style={{
-									display: 'flex', alignItems: 'center', padding: '0px 30px 0px 0px',
-									fontSize: '15px', fontWeight: 'normal'
-								}}>
-									{conf.title}
-								</div>
-								<ArrowIcon isOpened={isChatOpen}/>
-							</div> : <ChatTitleMsg onClick={this.toggle} conf={conf}/>)
-						:
-						<ChatTitleMsg onClick={this.toggle} conf={conf}/>
-				}
+                    (isChatOpen || this.wasChatOpened()) ?
+                        (isChatOpen ?
+                            <div style={{background: conf.mainColor, ...desktopTitleStyle}} onClick={this.toggle}>
+                                <div style={{
+                                    display: 'flex', alignItems: 'center', padding: '0px 30px 0px 0px',
+                                    fontSize: '15px', fontWeight: 'normal'
+                                }}>
+                                    {conf.title}
+                                </div>
+                                <ArrowIcon isOpened={isChatOpen}/>
+                            </div> : <ChatTitleMsg onClick={this.toggle} conf={conf}/>)
+                        :
+                        <ChatTitleMsg onClick={this.toggle} conf={conf}/>
+                }
 
-				{/*Chat IFrame*/}
-				<div key='chatframe' style={{
-					display: isChatOpen ? 'block' : 'none',
-					height: isMobile ? conf.mobileHeight : desktopHeight
-				}}>
-					{pristine ? null : <ChatFrame {...this.props} />}
-				</div>
+                {/*Chat IFrame*/}
+                <div key='chatframe' style={{
+                    display: isChatOpen ? 'block' : 'none',
+                    height: isMobile ? conf.mobileHeight : desktopHeight
+                }}>
+                    {pristine ? null : <ChatFrame {...this.props} />}
+                </div>
 
-			</div>
-		);
-	}
+            </div>
+        );
+    }
 
     toggle = () => {
     	let stateData = {
@@ -118,7 +118,7 @@ export default class Widget extends Component {
     	date.setTime(date.getTime() + (expirationTime * 24 * 60 * 60 * 1000));
 
     	document.cookie = `chatwasopened=1; expires=${date.toGMTString()}; path=/`;
-    };
+    }
 
     getCookie() {
     	let nameEQ = 'chatwasopened=';
@@ -129,7 +129,7 @@ export default class Widget extends Component {
     		if (c.indexOf(nameEQ) === 0) return c.substring(nameEQ.length, c.length);
     	}
     	return false;
-    };
+    }
 
     wasChatOpened() {
     	return (this.getCookie() !== false);
