@@ -1,5 +1,6 @@
 export const defaultConfiguration = {
 	chatServer: '/botman',
+    frameEndpoint: 'chat.html',
 	titleClosed: '...',
 	titleOpen: 'BotMan Widget',
 	closedStyle: 'button', // button or chat

@@ -29,7 +29,7 @@ function injectChat() {
     const dynamicConf = window.botmanWidget || {}; // these configuration are loaded when the chat frame is opened
 
 	const conf = {...defaultConfiguration, ...settings, ...dynamicConf};
-	const iFrameSrc = getBaseUrl()+'chat.html';
+	const iFrameSrc = getBaseUrl()+conf.frameEndpoint;
 
 	render(
 		<Widget
