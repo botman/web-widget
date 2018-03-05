@@ -13,7 +13,7 @@ html, body {
 
 /* M E S S A G E S */
 #messageArea {
-    overflow: scroll;
+    overflow-y: scroll;
 }
 
 .chat {
