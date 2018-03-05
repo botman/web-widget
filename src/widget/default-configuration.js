@@ -1,43 +1,43 @@
 export const defaultConfiguration = {
     /*
-	 * The URL of the BotMan route / server to use.
-	 */
+     * The URL of the BotMan route / server to use.
+     */
     chatServer: '/botman',
 
     /*
-	 * The location of your chat frame URL / route.
+     * The location of your chat frame URL / route.
 	 */
     frameEndpoint: 'chat.html',
 
     /*
-	 * Date and time format to use
+     * Date and time format to use
 	 */
     timeFormat: 'HH:MM',
     dateTimeFormat: 'm/d/yy HH:MM',
 
     /*
-	 * The title to use in the widget header.
+     * The title to use in the widget header.
 	 */
     title: 'BotMan Widget',
 
     /*
-	 * How many days is the cookie valid?
+     * How many days is the cookie valid?
 	 */
     cookieValidInDays: 1,
 
     /*
-	 * This is a welcome message that every new user sees
-	 * when the widget is opened for the first time.
+     * This is a welcome message that every new user sees
+     * when the widget is opened for the first time.
 	 */
     introMessage: '',
 
     /*
-	 * Input placeholder text
+     * Input placeholder text
 	 */
     placeholderText: 'Send a message...',
 
     /*
-	 * Toggle display of message times
+     * Toggle display of message times
 	 */
     displayMessageTime: true,
 
