@@ -17,6 +17,35 @@ export default class Chat extends Component {
 		if (!this.state.messages.length && this.props.conf.introMessage) {
 			this.writeToMessages({text: this.props.conf.introMessage, from: 'chatbot'});
 		}
+        window.botmanChatWidget = this;
+	}
+
+	say (text, showMessage = true) {
+
+        const message = {
+            text: text,
+            from: 'visitor'
+        };
+
+        // Send a message from the html user to the server
+        this.botman.callAPI(message.text, false, null, (msg) => {
+            this.writeToMessages({
+                text: msg.text,
+                type: msg.type,
+                actions: msg.actions,
+                attachment: msg.attachment,
+                additionalParameters: msg.additionalParameters,
+                from: 'chatbot'
+            });
+        });
+
+        if (showMessage) {
+        	this.writeToMessages(message);
+		}
+	}
+
+	whisper (text) {
+        this.say(text, false);
 	}
 
 	render({}, state) {
@@ -42,25 +71,7 @@ export default class Chat extends Component {
 
     handleKeyPress = (e) => {
     	if (e.keyCode === 13 && this.input.value.replace(/\s/g,'')) {
-    		const message = {
-    			text: this.input.value,
-    			from: 'visitor'
-    		};
-
-    		// Send a message from the html user to the server
-    		this.botman.callAPI(message.text, false, null, (msg) => {
-    			this.writeToMessages({
-    				text: msg.text,
-    				type: msg.type,
-    				actions: msg.actions,
-    				attachment: msg.attachment,
-    				additionalParameters: msg.additionalParameters,
-    				from: 'chatbot'
-    			});
-    		});
-
-    		// Write question to messages
-    		this.writeToMessages(message);
+    		this.say(this.input.value);
 
     		// Reset input value
     		this.input.value = '';
