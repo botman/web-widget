@@ -1,8 +1,16 @@
 import dateFormat from 'dateformat';
 import { h, Component } from 'preact';
-import ChatAction from './chat-action';
+import ActionType from './messages/action';
+import TextType from "./messages/text";
+import ButtonsType from "./messages/buttons";
 
 const dayInMillis = 60 * 60 * 24 * 1000;
+
+const messageTypes = {
+	actions: ActionType,
+	buttons: ButtonsType,
+	text: TextType
+};
 
 export default class MessageArea extends Component {
     scrollToBottom = () => {
@@ -39,36 +47,15 @@ export default class MessageArea extends Component {
     	return (
     		<ol class="chat" style={styleChat} >
     			{
-    				props.messages.map(({name, text, from, time, type, attachment, actions}) => {
+    				props.messages.map((message) => {
     					//from is either 'visitor' or 'chatbot'
-    					const msgTime = new Date(time);
-    					const textObject = {'__html':text};
+    					const msgTime = new Date(message.time);
+    					const MessageComponent = messageTypes[message.type] || 'text';
+
     					return (
-    						<li class={from}>
+    						<li class={message.from}>
     							<div class="msg">
-    								<p dangerouslySetInnerHTML={textObject} />
-    								{attachment && attachment.type === 'image' ?
-    									<img src={attachment.url} style="max-width: 100%;" />
-    									:
-    									''
-    								}
-    								{attachment && attachment.type === 'audio' ?
-    									<audio controls autoplay="" style="max-width: 100%;">
-    										<source src={attachment.url} type="audio/mp3" />
-    									</audio>
-    									:
-    									''
-    								}
-    								{attachment && attachment.type === 'video' ?
-    									<video height={props.conf.videoHeight} controls autoplay="" style="max-width: 100%;">
-    										<source src={attachment.url} type="video/mp4" />
-    									</video>
-    									:
-    									''
-    								}
-    								{type === 'actions' &&
-                                        actions.map((action, index) => <ChatAction messageHandler={this.props.messageHandler} action={action} />)
-    								}
+                                    <MessageComponent message={message} {...this.props} />
     								{ (props.conf.displayMessageTime) ?
     									<div class="time">
     										{

@@ -24,19 +24,14 @@ export default class Chat extends Component {
 
         const message = {
             text: text,
+			type: 'text',
             from: 'visitor'
         };
 
         // Send a message from the html user to the server
         this.botman.callAPI(message.text, false, null, (msg) => {
-            this.writeToMessages({
-                text: msg.text,
-                type: msg.type,
-                actions: msg.actions,
-                attachment: msg.attachment,
-                additionalParameters: msg.additionalParameters,
-                from: 'chatbot'
-            });
+        	msg.from = 'chatbot';
+            this.writeToMessages(msg);
         });
 
         if (showMessage) {
