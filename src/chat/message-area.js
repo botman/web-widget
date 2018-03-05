@@ -3,12 +3,14 @@ import { h, Component } from 'preact';
 import ActionType from './messages/action';
 import TextType from "./messages/text";
 import ButtonsType from "./messages/buttons";
+import ListType from "./messages/list";
 
 const dayInMillis = 60 * 60 * 24 * 1000;
 
 const messageTypes = {
 	actions: ActionType,
 	buttons: ButtonsType,
+	list: ListType,
 	text: TextType
 };
 
