@@ -3,6 +3,7 @@ import ChatFrame from './chat-frame';
 import ChatFloatingButton from './chat-floating-button';
 import ChatTitleMsg from './chat-title-msg';
 import ArrowIcon from './arrow-icon';
+import Api from './api';
 import {
 	desktopTitleStyle,
 	desktopWrapperStyle,
@@ -18,6 +19,10 @@ export default class Widget extends Component {
 		this.state.isChatOpen = false;
 		this.state.pristine = true;
 		this.state.wasChatOpened = this.wasChatOpened();
+	}
+
+	componentDidMount() {
+		window.botmanChatWidget = new Api(this);
 	}
 
 	render({conf, isMobile}, {isChatOpen, pristine}) {
@@ -50,13 +55,13 @@ export default class Widget extends Component {
 				{/* Open/close button */}
 				{(isMobile || conf.alwaysUseFloatingButton) && !isChatOpen ?
 
-					<ChatFloatingButton onClick={this.onClick} conf={conf}/>
+					<ChatFloatingButton onClick={this.toggle} conf={conf}/>
 
 					:
 
 					(isChatOpen || this.wasChatOpened()) ?
 						(isChatOpen ?
-							<div style={{background: conf.mainColor, ...desktopTitleStyle}} onClick={this.onClick}>
+							<div style={{background: conf.mainColor, ...desktopTitleStyle}} onClick={this.toggle}>
 								<div style={{
 									display: 'flex', alignItems: 'center', padding: '0px 30px 0px 0px',
 									fontSize: '15px', fontWeight: 'normal'
@@ -64,9 +69,9 @@ export default class Widget extends Component {
 									{conf.title}
 								</div>
 								<ArrowIcon isOpened={isChatOpen}/>
-							</div> : <ChatTitleMsg onClick={this.onClick} conf={conf}/>)
+							</div> : <ChatTitleMsg onClick={this.toggle} conf={conf}/>)
 						:
-						<ChatTitleMsg onClick={this.onClick} conf={conf}/>
+						<ChatTitleMsg onClick={this.toggle} conf={conf}/>
 				}
 
 				{/*Chat IFrame*/}
@@ -81,7 +86,7 @@ export default class Widget extends Component {
 		);
 	}
 
-    onClick = () => {
+    toggle = () => {
     	let stateData = {
     		pristine: false,
     		isChatOpen: !this.state.isChatOpen
@@ -93,7 +98,21 @@ export default class Widget extends Component {
     	this.setState(stateData);
     };
 
-    setCookie = () => {
+    open() {
+        this.setState({
+            pristine: false,
+            isChatOpen: true
+        });
+    }
+
+    close() {
+        this.setState({
+            pristine: false,
+            isChatOpen: false
+        });
+    }
+
+    setCookie() {
     	let date = new Date();
     	let expirationTime = parseInt(this.props.conf.cookieValidInDays);
     	date.setTime(date.getTime() + (expirationTime * 24 * 60 * 60 * 1000));
@@ -101,7 +120,7 @@ export default class Widget extends Component {
     	document.cookie = `chatwasopened=1; expires=${date.toGMTString()}; path=/`;
     };
 
-    getCookie = () => {
+    getCookie() {
     	let nameEQ = 'chatwasopened=';
     	let ca = document.cookie.split(';');
     	for (let i = 0; i < ca.length; i++) {
@@ -112,7 +131,7 @@ export default class Widget extends Component {
     	return false;
     };
 
-    wasChatOpened = () => {
+    wasChatOpened() {
     	return (this.getCookie() !== false);
     }
 
