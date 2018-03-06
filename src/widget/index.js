@@ -19,7 +19,10 @@ function injectChat() {
     root.id = 'botmanWidgetRoot';
     document.getElementsByTagName('body')[0].appendChild(root);
 
-    const settings = JSON.parse(getUrlParameter('settings', '{}'));
+    let settings = {};
+    try {
+        settings = JSON.parse(getUrlParameter('settings', '{}'));
+    } catch (e) { }
 
     const dynamicConf = window.botmanWidget || {}; // these configuration are loaded when the chat frame is opened
 
