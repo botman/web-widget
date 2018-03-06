@@ -13,7 +13,10 @@ export default class ActionType extends Component {
         });
 
         return (
-            <div>{buttons}</div>
+            <div>
+                {message.text && <div>{message.text}</div>}
+                <div>{buttons}</div>
+            </div>
         );
     }
 
