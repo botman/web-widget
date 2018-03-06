@@ -1,6 +1,6 @@
 {
   "name": "botman-web-widget",
-  "version": "0.0.4",
+  "version": "0.0.6",
   "description": "BotMan web widget to use with the web driver.",
   "scripts": {
     "dev": "cross-env NODE_ENV=development webpack-dev-server --inline --hot --progress",
@@ -16,6 +16,7 @@
     "widget",
     "web driver"
   ],
+  "main": "/build/js/widget.js",
   "license": "MIT",
   "author": "Marcel Pociot <m.pociot@gmail.com>",
   "jest": {

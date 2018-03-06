@@ -9,12 +9,12 @@ export default class ChatFloatingButton extends Component {
                 <div
                     className="mobile-closed-message-avatar"
                     style={{
-                        background: conf.closedChatAvatarBackground,
+                        background: conf.bubbleBackground,
                         ...mobileClosedMessageAvatarStyle
                     }}
                 >
 
-                    {(conf.closedChatAvatarUrl === '') ?
+                    {(conf.bubbleAvatarUrl === '') ?
                         <svg style={{paddingTop: 4}}
                             fill="#FFFFFF" height="24" viewBox="0 0 24 24" width="24"
                             xmlns="http://www.w3.org/2000/svg">
@@ -22,11 +22,11 @@ export default class ChatFloatingButton extends Component {
                             <path d="M0 0h24v24H0z" fill="none"/>
                         </svg>
                         :
-                        ((conf.closedChatAvatarUrl.indexOf('/')!==-1) ?
+                        ((conf.bubbleAvatarUrl.indexOf('/')!==-1) ?
                             <img
-                                src={conf.closedChatAvatarUrl}
+                                src={conf.bubbleAvatarUrl}
                                 style={{...closedChatAvatarImageStyle}}
-                            />: <center><br/>{conf.closedChatAvatarUrl}</center>)
+                            />: <center><br/>{conf.bubbleAvatarUrl}</center>)
                     }
                 </div>
             </div>
