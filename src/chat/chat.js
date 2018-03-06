@@ -24,6 +24,14 @@ export default class Chat extends Component {
         window.botmanChatWidget = this;
     }
 
+    sayAsBot (text) {
+        this.writeToMessages({
+            text,
+            type: 'text',
+            from: 'chatbot'
+        });
+    }
+
     say (text, showMessage = true) {
 
         const message = {

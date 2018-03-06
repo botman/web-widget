@@ -38,6 +38,16 @@ export default class Api {
         });
     }
 
+    sayAsBot(text) {
+        this.getChatWidget()
+            .then((widget) => {
+                widget.sayAsBot(text);
+            })
+            .catch(() => {
+                console.error('Unable to get BotMan widget.');
+            });
+    }
+
     say(text) {
         this.getChatWidget()
             .then((widget) => {
