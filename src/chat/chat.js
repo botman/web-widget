@@ -15,7 +15,11 @@ export default class Chat extends Component {
 
     componentDidMount() {
         if (!this.state.messages.length && this.props.conf.introMessage) {
-            this.writeToMessages({text: this.props.conf.introMessage, from: 'chatbot'});
+            this.writeToMessages({
+                text: this.props.conf.introMessage,
+                type: 'text',
+                from: 'chatbot'
+            });
         }
         window.botmanChatWidget = this;
     }

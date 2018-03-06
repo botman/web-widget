@@ -41,8 +41,8 @@ export const defaultConfiguration = {
      */
     displayMessageTime: true,
 
-    mainColor: '#196eb4',
-    closedChatAvatarBackground: '#196eb4',
+    mainColor: '#408591',
+    closedChatAvatarBackground: '#408591',
     closedChatAvatarUrl: '',
     desktopHeight: 450,
     desktopWidth: 370,

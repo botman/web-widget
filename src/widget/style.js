@@ -97,7 +97,8 @@ export const desktopIntroMessageStyle = {
 };
 
 export const desktopClosedMessageAvatarStyle = {
-    display: 'block',
+    display: 'flex',
+    justifyContent: 'center',
     position: 'absolute',
     top: '38px',
     right: '20px',

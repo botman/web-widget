@@ -195,5 +195,8 @@ div.loading-dots .dot-lg {
     border-radius: 5px;
     margin: 5px;
     min-width: 100px;
-    background-color: lightgrey;
+    background-color: #408591;
+    cursor: pointer;
+    color: white;
+    text-align: center;
 }
