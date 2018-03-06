@@ -1,6 +1,6 @@
 import {h, render} from 'preact';
 import Widget from './widget';
-import {defaultConfiguration} from './default-configuration';
+import {defaultConfiguration} from './configuration';
 
 if (window.attachEvent) {
     window.attachEvent('onload', injectChat);
