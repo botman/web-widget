@@ -7,7 +7,7 @@ export const defaultConfiguration = {
     /*
      * The location of your chat frame URL / route.
      */
-    frameEndpoint: 'chat.html',
+    frameEndpoint: '/botman/chat',
 
     /*
      * Date and time format to use
