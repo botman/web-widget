@@ -14,11 +14,6 @@ function getUrlParameter(name, defaults = '') {
     let results = regex.exec(document.getElementById('botmanWidget').src);
     return results === null ? defaults : decodeURIComponent(results[1].replace(/\+/g, ' '));
 }
-
-function getBaseUrl(){
-    return document.getElementById('botmanWidget').src.split( 'js/widget.js' )[0];
-}
-
 function injectChat() {
     let root = document.createElement('div');
     root.id = 'botmanWidgetRoot';
@@ -29,7 +24,8 @@ function injectChat() {
     const dynamicConf = window.botmanWidget || {}; // these configuration are loaded when the chat frame is opened
 
     const conf = {...defaultConfiguration, ...settings, ...dynamicConf};
-    const iFrameSrc = getBaseUrl()+conf.frameEndpoint;
+
+    const iFrameSrc = conf.frameEndpoint;
 
     render(
         <Widget
