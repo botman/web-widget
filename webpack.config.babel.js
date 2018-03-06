@@ -172,10 +172,10 @@ module.exports = {
 	devServer: {
 		port: process.env.PORT || 8080,
 		host: 'localhost',
-		publicPath: '/',
+		publicPath: '/js/',
 		contentBase: './src',
 		historyApiFallback: true,
 		open: true,
-		openPage: '',
+		openPage: 'demo.html',
 	}
 };
