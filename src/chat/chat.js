@@ -21,7 +21,14 @@ export default class Chat extends Component {
                 from: 'chatbot'
             });
         }
-        window.botmanChatWidget = this;
+        // Add event listener for widget API
+        window.addEventListener('message', (event) => {
+            try {
+                this[event.data.method].apply(this, event.data.params);
+            } catch (e) {
+                //
+            }
+        });
     }
 
     sayAsBot (text) {

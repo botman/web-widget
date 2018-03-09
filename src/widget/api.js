@@ -24,13 +24,12 @@ export default class Api {
     getChatWidget() {
         return new Promise((resolve, reject) => {
             if (this.isOpen()) {
-                return resolve(document.getElementById('chatBotManFrame').contentWindow.window.botmanChatWidget);
+                return resolve(document.getElementById('chatBotManFrame').contentWindow);
             }
             try {
                 this.open();
                 setTimeout(() => {
-                    const widget = document.getElementById('chatBotManFrame').contentWindow.window.botmanChatWidget;
-                    resolve(widget);
+                    resolve(document.getElementById('chatBotManFrame').contentWindow);
                 }, 750);
             } catch (e) {
                 reject(e);
@@ -40,8 +39,13 @@ export default class Api {
 
     sayAsBot(text) {
         this.getChatWidget()
-            .then((widget) => {
-                widget.sayAsBot(text);
+            .then((contentWindow) => {
+                contentWindow.postMessage({
+                    method: 'sayAsBot',
+                    params: [
+                        text
+                    ]
+                }, '*');
             })
             .catch(() => {
                 console.error('Unable to get BotMan widget.');
@@ -50,8 +54,13 @@ export default class Api {
 
     say(text) {
         this.getChatWidget()
-            .then((widget) => {
-                widget.say(text);
+            .then((contentWindow) => {
+                contentWindow.postMessage({
+                    method: 'say',
+                    params: [
+                        text
+                    ]
+                }, '*');
             })
             .catch(() => {
                 console.error('Unable to get BotMan widget.');
@@ -61,8 +70,13 @@ export default class Api {
     whisper(text) {
 
         this.getChatWidget()
-            .then((widget) => {
-                widget.whisper(text);
+            .then((contentWindow) => {
+                contentWindow.postMessage({
+                    method: 'whisper',
+                    params: [
+                        text
+                    ]
+                }, '*');
             })
             .catch(() => {
                 console.error('Unable to get BotMan widget.');
