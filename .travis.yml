@@ -1,3 +1,9 @@
 language: node_js
+cache:
+  yarn: true
+  directories:
+    - node_modules
 node_js:
   - stable
+script:
+  - yarn test
