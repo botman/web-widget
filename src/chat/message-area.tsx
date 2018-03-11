@@ -4,8 +4,7 @@ import ActionType from './messages/action';
 import TextType from "./messages/text";
 import ButtonsType from "./messages/buttons";
 import ListType from "./messages/list";
-import { IConfiguration } from "../widget/configuration"
-import { IMessage } from './chat-action';
+import { IConfiguration, IMessage } from '../typings';
 
 const dayInMillis = 60 * 60 * 24 * 1000;
 
@@ -14,13 +13,6 @@ const messageTypes = {
     buttons: ButtonsType,
     list: ListType,
     text: TextType
-};
-
-interface IMessageAreaProps {
-	conf: IConfiguration,
-	messages: IMessage[],
-	messageHandler: Function,
-
 };
 
 export default class MessageArea extends Component<IMessageAreaProps, any> {
@@ -61,12 +53,13 @@ export default class MessageArea extends Component<IMessageAreaProps, any> {
     				props.messages.map((message) => {
     					//from is either 'visitor' or 'chatbot'
     					const msgTime = new Date(message.time);
-    					const MessageComponent = messageTypes[message.type] || 'text';
+						const MessageComponent = messageTypes[message.type || 'text'];
+						const { messageHandler, conf } = this.props;
 
     					return (
     						<li class={message.from}>
     							<div class="msg">
-                                    <MessageComponent message={message} {...this.props} />
+                                    <MessageComponent message={message} messageHandler={messageHandler} conf={conf} />
     								{ (props.conf.displayMessageTime) ?
     									<div class="time">
     										{
@@ -88,3 +81,9 @@ export default class MessageArea extends Component<IMessageAreaProps, any> {
     }
 
 }
+
+interface IMessageAreaProps {
+	conf: IConfiguration,
+	messages: IMessage[],
+	messageHandler: Function,
+};

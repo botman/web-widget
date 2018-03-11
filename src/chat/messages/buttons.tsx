@@ -2,16 +2,12 @@ import { h, Component } from 'preact';
 import {botman} from './../botman';
 import TextType from './text';
 import ActionType from './action';
-import { IMessage, IButton } from '../chat-action';
 
-interface IButtonTypeProps {
-    message: IMessage,
-    messageHandler: Function,
-}
+import { IButton, IMessage, IMessageTypeProps } from '../../typings';
 
-export default class ButtonsType extends Component<IButtonTypeProps, any> {
+export default class ButtonsType extends Component<IMessageTypeProps, any> {
 
-    render(props: IButtonTypeProps) {
+    render(props: IMessageTypeProps) {
         const message = props.message;
 
         const buttons = message.buttons.map((button) => {

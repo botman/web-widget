@@ -1,16 +1,8 @@
 import { h, Component } from "preact";
-import { IMessage } from "../chat-action";
-import { IConfiguration } from "../../widget/configuration";
+import { IMessageTypeProps } from "../../typings";
 
-interface ITextTypeProps {
-    message: IMessage,
-    messageHandler: Function,
-    conf: IConfiguration
-}
-
-
-export default class TextType extends Component<ITextTypeProps, any> {
-    render(props: ITextTypeProps) {
+export default class TextType extends Component<IMessageTypeProps, any> {
+    render(props: IMessageTypeProps) {
         const message = props.message;
         const attachment = message.attachment;
 

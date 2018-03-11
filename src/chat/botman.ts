@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { IAttachment, IMessage } from './chat-action';
+import { IAttachment, IMessage } from './../typings';
 
 class BotMan {
 
@@ -16,12 +16,12 @@ class BotMan {
 
     callAPI = (text: string, interactive = false, attachment: IAttachment = null, perMessageCallback: Function, callback: Function) => {
     	let data = new FormData();
-    	const postData = {
+    	const postData: { [index: string] : string|Blob } = {
     		driver: 'web',
     		userId: this.userId,
     		message: text,
-    		attachment,
-    		interactive
+    		attachment: attachment as Blob,
+    		interactive: interactive ? '0' : '1' // FIXME: 
     	};
 
     	Object.keys(postData).forEach(key => data.append(key, postData[key]));

@@ -1,5 +1,5 @@
 import { h, Component } from 'preact';
-import { IConfiguration } from './configuration';
+import { IConfiguration } from '../typings';
 
 export default class ChatFrame extends Component<any, any> {
 

@@ -1,6 +1,6 @@
 import { h, Component } from 'preact';
 import {mobileClosedMessageAvatarStyle, closedChatAvatarImageStyle} from './style';
-import { IConfiguration } from './configuration';
+import { IConfiguration } from '../typings';
 
 export default class ChatFloatingButton extends Component<IChatFloatingButtonProps, any> {
 

@@ -28,6 +28,7 @@ module.exports = {
 			'node_modules'
 		],
 		alias: {
+			typings: path.resolve(__dirname, "src/typings"),
 			components: path.resolve(__dirname, "src/components"),    // used for tests
 			style: path.resolve(__dirname, "src/style"),
 			'react': 'preact-compat',

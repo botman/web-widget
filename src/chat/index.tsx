@@ -1,5 +1,6 @@
 import { h, render } from 'preact';
 import Chat from './chat';
+import { IConfiguration } from '../typings';
 
 if (window.attachEvent) {
     window.attachEvent('onload', injectChat);
@@ -7,9 +8,8 @@ if (window.attachEvent) {
     window.addEventListener('load', injectChat, false);
 }
 
-let conf = {
-    userId: Object,
-};
+let conf = {};
+
 const confString = getUrlParameter('conf');
 if (confString) {
     try {
@@ -27,7 +27,7 @@ function injectChat() {
     render(
         <Chat
             userId={getUserId()}
-            conf={conf}
+            conf={conf as IConfiguration}
         />,
         root
     );
@@ -42,10 +42,10 @@ function getUrlParameter(name: string) {
     return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
 }
 
-function getUserId () {
-    return conf.userId || generateRandomId();
+function getUserId(): string {
+    return (conf as IConfiguration).userId || generateRandomId();
 }
 
-function generateRandomId() {
+function generateRandomId(): string {
     return Math.random().toString(36).substr(2, 6);
 }

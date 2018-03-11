@@ -1,20 +1,11 @@
 import { h, Component } from "preact";
 import MessageArea from "./message-area";
 import { botman } from "./botman";
-import { IConfiguration } from "../widget/configuration";
-import { IMessage } from "./chat-action";
-
-interface IChatProps {
-    userId: string,
-    conf: IConfiguration
-}
-
-interface IChatState {
-    messages: IMessage[],
-}
+import { IMessage, IConfiguration } from "../typings";
 
 export default class Chat extends Component<IChatProps, IChatState> {
 
+    [key: string]: any
     botman: any;
     input: HTMLInputElement;
 
@@ -54,7 +45,7 @@ export default class Chat extends Component<IChatProps, IChatState> {
     }
 
     say(text: string, showMessage = true) {
-        const message = {
+        const message: IMessage = {
             text,
             type: "text",
             from: "visitor"
@@ -75,7 +66,7 @@ export default class Chat extends Component<IChatProps, IChatState> {
         this.say(text, false);
     }
 
-    render({}, state) {
+    render({}, state: IChatState) {
         return (
             <div>
                 <div id="messageArea">
@@ -129,7 +120,7 @@ export default class Chat extends Component<IChatProps, IChatState> {
 	        msg.time = new Date().toJSON(); //2015-10-26T07:46:36.611Z
 	    }
 	    if (msg.attachment === null) {
-	        msg.attachment = {};
+	        msg.attachment = {}; // TODO: This renders IAttachment useless
 	    }
 
 	    this.state.messages.push(msg);
@@ -138,4 +129,13 @@ export default class Chat extends Component<IChatProps, IChatState> {
 	        messages: this.state.messages
 	    });
 	};
+}
+
+interface IChatProps {
+    userId: string,
+    conf: IConfiguration
+}
+
+interface IChatState {
+    messages: IMessage[],
 }

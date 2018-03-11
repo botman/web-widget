@@ -11,12 +11,7 @@ import {
     mobileClosedWrapperStyle,
     desktopClosedWrapperStyleChat
 } from './style';
-import { IConfiguration } from './configuration';
-
-
-declare global {
-    interface Window { attachEvent: Function, botmanChatWidget: Api }
-}
+import { IConfiguration } from '../typings';
 
 export default class Widget extends Component<any, IWidgetState> {
 
@@ -124,11 +119,11 @@ export default class Widget extends Component<any, IWidgetState> {
     }
 
     setCookie() {
-    	let date = new Date();
+    	let date: IDate = new Date();
     	let expirationTime = parseInt(this.props.conf.cookieValidInDays);
     	date.setTime(date.getTime() + (expirationTime * 24 * 60 * 60 * 1000));
 
-    	document.cookie = `chatwasopened=1; expires=${date['toGMTString']()}; path=/`;
+    	document.cookie = `chatwasopened=1; expires=${date.toGMTString()}; path=/`;
     }
 
     getCookie() {
@@ -159,4 +154,13 @@ interface IWidgetProps {
     iFrameSrc: string,
     conf: IConfiguration,
     isMobile: boolean,
+}
+
+declare global {
+    interface Window { attachEvent: Function, botmanChatWidget: Api }
+}
+
+// FIXME: toGMTString is deprecated
+interface IDate extends Date {
+  toGMTString?(): string;
 }

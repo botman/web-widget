@@ -1,14 +1,14 @@
 import { h, Component } from 'preact';
 import {botman} from './../botman';
-import { IAction, IMessage } from '../chat-action';
+import { IMessageTypeProps, IAction, IMessage } from '../../typings';
 
 interface IActionTypeProps {
     message: IMessage,
     messageHandler: Function
 }
-export default class ActionType extends Component<IActionTypeProps, any> {
+export default class ActionType extends Component<IMessageTypeProps, any> {
 
-    render(props: IActionTypeProps) {
+    render(props: IMessageTypeProps) {
         const message = props.message;
 
         const buttons = message.actions.map((action: IAction) => {
