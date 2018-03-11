@@ -1,15 +1,14 @@
 {
 	"compilerOptions": {
-		"outDir": "./dist/",        // path to output directory
-		"sourceMap": true,          // allow sourcemap support
+		"sourceMap": true,
 		"noEmit": false,
 		"noImplicitAny": true,
-		"strictNullChecks": false,   // enable strict null checks as a best practice
-		"module": "es6",            // specify module code generation
-		"jsx": "react",             // use typescript to transpile jsx to js
+		"strictNullChecks": false,
+		"module": "es6",
+		"jsx": "react",
 		"jsxFactory": "h",
-		"target": "es5",            // specify ECMAScript target version
-		"allowJs": true,             // allow a partial TypeScript and JavaScript codebase
+		"target": "es5",
+		"allowJs": true,
 		"moduleResolution": "node",
 		"lib": ["dom", "es5", "scripthost", "es2015.promise"]
 	},
