@@ -22,7 +22,6 @@ export default class ChatFrame extends Component<any, any> {
     }
 }
 
-
 interface IChatFrameProps {
     iFrameSrc: string,
     conf: IConfiguration,

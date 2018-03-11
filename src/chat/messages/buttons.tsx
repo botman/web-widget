@@ -2,7 +2,6 @@ import { h, Component } from 'preact';
 import {botman} from './../botman';
 import TextType from './text';
 import ActionType from './action';
-
 import { IButton, IMessage, IMessageTypeProps } from '../../typings';
 
 export default class ButtonsType extends Component<IMessageTypeProps, any> {

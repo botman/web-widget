@@ -2,10 +2,6 @@ import { h, Component } from 'preact';
 import {botman} from './../botman';
 import { IMessageTypeProps, IAction, IMessage } from '../../typings';
 
-interface IActionTypeProps {
-    message: IMessage,
-    messageHandler: Function
-}
 export default class ActionType extends Component<IMessageTypeProps, any> {
 
     render(props: IMessageTypeProps) {

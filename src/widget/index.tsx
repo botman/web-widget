@@ -2,10 +2,6 @@ import {h, render} from 'preact';
 import Widget from './widget';
 import {defaultConfiguration} from './configuration';
 
-declare global {
-    interface Window { attachEvent: Function, botmanWidget: Widget }
-}
-
 if (window.attachEvent) {
     window.attachEvent('onload', injectChat);
 } else {
@@ -43,4 +39,8 @@ function injectChat() {
         root
     );
 
+}
+
+declare global {
+    interface Window { attachEvent: Function, botmanWidget: Widget }
 }

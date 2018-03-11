@@ -33,8 +33,6 @@ function injectChat() {
     );
 }
 
-
-
 function getUrlParameter(name: string) {
     name = name.replace(/[[]/, '\\[').replace(/[]]/, '\\]');
     let regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
@@ -42,10 +40,10 @@ function getUrlParameter(name: string) {
     return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
 }
 
-function getUserId(): string {
+function getUserId() {
     return (conf as IConfiguration).userId || generateRandomId();
 }
 
-function generateRandomId(): string {
+function generateRandomId() {
     return Math.random().toString(36).substr(2, 6);
 }
