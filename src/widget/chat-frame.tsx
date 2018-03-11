@@ -1,6 +1,6 @@
 import { h, Component } from 'preact';
 
-export default class ChatFrame extends Component {
+export default class ChatFrame extends Component<any, any> {
 
     shouldComponentUpdate() {
         // do not re-render via diff:
@@ -14,8 +14,8 @@ export default class ChatFrame extends Component {
             <iframe id="chatBotManFrame" src={iFrameSrc + '?conf=' + encodedConf}
                 width='100%'
                 height={isMobile ? '94%' : '100%'}
-                frameborder='0'
-                allowtransparency='true'
+                frameBorder='0'
+                allowTransparency
                 style='background-color:transparent' />
         );
     }

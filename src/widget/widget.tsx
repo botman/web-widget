@@ -12,7 +12,19 @@ import {
     desktopClosedWrapperStyleChat
 } from './style';
 
-export default class Widget extends Component {
+declare global {
+    interface Window { botmanChatWidget: Api; }
+}
+
+interface WidgetStateType {
+    isChatOpen: boolean,
+    pristine: boolean,
+    wasChatOpened: boolean,
+}
+
+export default class Widget extends Component<any, WidgetStateType> {
+
+    state: WidgetStateType;
 
     constructor() {
         super();
@@ -25,8 +37,10 @@ export default class Widget extends Component {
         window.botmanChatWidget = new Api(this);
     }
 
-    render({conf, isMobile}, {isChatOpen, pristine}) {
+    render(props, state: WidgetStateType) {
 
+        const {conf, isMobile} = props;
+        const {isChatOpen, pristine} = state;
         const wrapperWidth = {width: isMobile ? conf.mobileWidth : conf.desktopWidth};
         const desktopHeight = (window.innerHeight - 100 < conf.desktopHeight) ? window.innerHeight - 90 : conf.desktopHeight;
         conf.wrapperHeight = desktopHeight;
@@ -89,7 +103,8 @@ export default class Widget extends Component {
     toggle = () => {
     	let stateData = {
     		pristine: false,
-    		isChatOpen: !this.state.isChatOpen
+            isChatOpen: !this.state.isChatOpen,
+            wasChatOpened: false,
     	};
     	if (!this.state.isChatOpen && !this.wasChatOpened()) {
     		this.setCookie();
@@ -117,7 +132,7 @@ export default class Widget extends Component {
     	let expirationTime = parseInt(this.props.conf.cookieValidInDays);
     	date.setTime(date.getTime() + (expirationTime * 24 * 60 * 60 * 1000));
 
-    	document.cookie = `chatwasopened=1; expires=${date.toGMTString()}; path=/`;
+    	document.cookie = `chatwasopened=1; expires=${date['toGMTString']()}; path=/`;
     }
 
     getCookie() {

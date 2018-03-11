@@ -14,7 +14,7 @@ const messageTypes = {
     text: TextType
 };
 
-export default class MessageArea extends Component {
+export default class MessageArea extends Component<any, any> {
     scrollToBottom = () => {
     	const messageArea = document.getElementById('messageArea');
     	messageArea.scrollTop = messageArea.scrollHeight;
@@ -24,7 +24,7 @@ export default class MessageArea extends Component {
     	const scripts = document.getElementById('messageArea').getElementsByTagName('script');
     	for (let i = 0; i < scripts.length; i++) {
     		try {
-    			window.eval(scripts[i].innerHTML);
+    			eval(scripts[i].innerHTML);
     		} catch (error) {
     			// console.log('Error caught:',error);
     		}
@@ -61,7 +61,7 @@ export default class MessageArea extends Component {
     								{ (props.conf.displayMessageTime) ?
     									<div class="time">
     										{
-    											currentTime - msgTime < dayInMillis ?
+    											currentTime.getMilliseconds() - msgTime.getMilliseconds() < dayInMillis ?
     												dateFormat(msgTime, props.conf.timeFormat) :
     												dateFormat(msgTime, props.conf.dateTimeFormat)
     										}

@@ -2,6 +2,10 @@ import {h, render} from 'preact';
 import Widget from './widget';
 import {defaultConfiguration} from './configuration';
 
+declare global {
+    interface Window { attachEvent: Function, botmanWidget: Widget }
+}
+
 if (window.attachEvent) {
     window.attachEvent('onload', injectChat);
 } else {
@@ -11,7 +15,7 @@ if (window.attachEvent) {
 function getUrlParameter(name, defaults = '') {
     name = name.replace(/[[]/, '\\[').replace(/[]]/, '\\]');
     let regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
-    let results = regex.exec(document.getElementById('botmanWidget').src);
+    let results = regex.exec(document.getElementById('botmanWidget').getAttribute('src'));
     return results === null ? defaults : decodeURIComponent(results[1].replace(/\+/g, ' '));
 }
 function injectChat() {

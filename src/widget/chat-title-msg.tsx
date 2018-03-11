@@ -3,7 +3,7 @@ import {desktopClosedMessageStyle, desktopIntroMessageStyle, desktopClosedMessag
 
 export default class ChatTitleMsg extends Component<any, any> {
 
-    render({conf: any},{}) {
+    render({conf},{}) {
         return (
             <div style={{position: 'relative', cursor: 'pointer'}} onClick={this.props.onClick}>
                 <div
@@ -25,7 +25,7 @@ export default class ChatTitleMsg extends Component<any, any> {
                             <img
                                 src={conf.bubbleAvatarUrl}
                                 style={{...closedChatAvatarImageStyle}}
-                            />: <center><br/>{conf.bubbleAvatarUrl}</center>)
+                            />: <div style={{ display: 'flex', alignItems: 'center' }}><br/>{conf.bubbleAvatarUrl}</div>)
                     }
                 </div>
             </div>

@@ -7,7 +7,9 @@ if (window.attachEvent) {
     window.addEventListener('load', injectChat, false);
 }
 
-let conf = {};
+let conf = {
+    userId: null,
+};
 const confString = getUrlParameter('conf');
 if (confString) {
     try {

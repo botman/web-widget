@@ -2,7 +2,11 @@ import { h, Component } from "preact";
 import MessageArea from "./message-area";
 import { botman } from "./botman";
 
-export default class Chat extends Component {
+export default class Chat extends Component<any, any> {
+
+    botman: any;
+    input: HTMLInputElement;
+
     constructor(props) {
         super(props);
 
@@ -76,7 +80,7 @@ export default class Chat extends Component {
                     type="text"
                     placeholder={this.props.conf.placeholderText}
                     ref={input => {
-                        this.input = input;
+                        this.input = input as HTMLInputElement;
                     }}
                     onKeyPress={this.handleKeyPress}
                     autofocus

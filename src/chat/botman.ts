@@ -2,6 +2,9 @@ import axios from 'axios';
 
 class BotMan {
 
+	userId: string;
+	chatServer: string;
+
     setUserId(userId) {
         this.userId = userId;
     }
@@ -10,7 +13,7 @@ class BotMan {
         this.chatServer = chatServer;
     }
 
-    callAPI = (text, interactive = false, attachment = null, perMessageCallback, callback) => {
+    callAPI = (text, interactive = false, attachment = null, perMessageCallback: Function, callback: Function) => {
     	let data = new FormData();
     	const postData = {
     		driver: 'web',

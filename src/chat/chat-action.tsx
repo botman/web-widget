@@ -1,7 +1,7 @@
 import { h, Component } from 'preact';
 import {botman} from './botman';
 
-export default class ChatAction extends Component {
+export default class ChatAction extends Component<any, any> {
 
     render(props) {
         return (
@@ -21,6 +21,6 @@ export default class ChatAction extends Component {
                 additionalParameters: msg.additionalParameters,
                 from: 'chatbot'
             });
-        });
+        }, null);
     }
 }

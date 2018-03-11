@@ -3,7 +3,7 @@ import {botman} from './../botman';
 import TextType from './text';
 import ActionType from './action';
 
-export default class ListType extends Component {
+export default class ListType extends Component<any, any> {
 
     getButton(button) {
         if (button.type === 'postback') {
@@ -56,6 +56,6 @@ export default class ListType extends Component {
                 additionalParameters: msg.additionalParameters,
                 from: 'chatbot'
             });
-        });
+        }, null);
     }
 }

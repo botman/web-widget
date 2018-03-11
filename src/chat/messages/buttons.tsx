@@ -3,7 +3,7 @@ import {botman} from './../botman';
 import TextType from './text';
 import ActionType from './action';
 
-export default class ButtonsType extends Component {
+export default class ButtonsType extends Component<any, any> {
 
     render(props) {
         const message = props.message;
@@ -37,6 +37,6 @@ export default class ButtonsType extends Component {
                 additionalParameters: msg.additionalParameters,
                 from: 'chatbot'
             });
-        });
+        }, null);
     }
 }

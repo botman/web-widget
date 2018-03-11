@@ -1,6 +1,6 @@
 import { h, Component } from 'preact';
 
-export default class ArrowIcon extends Component {
+export default class ArrowIcon extends Component<any, any> {
 
     render({isOpened},{}) {
         return (

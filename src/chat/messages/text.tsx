@@ -1,6 +1,6 @@
 import { h, Component } from "preact";
 
-export default class TextType extends Component {
+export default class TextType extends Component<any, any> {
     render(props) {
         const message = props.message;
         const attachment = message.attachment;
@@ -17,7 +17,7 @@ export default class TextType extends Component {
                     ""
                 )}
                 {attachment && attachment.type === "audio" ? (
-                    <audio controls autoplay="" style="max-width: 100%;">
+                    <audio controls autoPlay={false} style="max-width: 100%;">
                         <source src={attachment.url} type="audio/mp3" />
                     </audio>
                 ) : (
@@ -27,7 +27,7 @@ export default class TextType extends Component {
                     <video
                         height={props.conf.videoHeight}
                         controls
-                        autoplay=""
+                        autoPlay={false}
                         style="max-width: 100%;"
                     >
                         <source src={attachment.url} type="video/mp4" />

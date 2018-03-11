@@ -1,7 +1,7 @@
 import { h, Component } from 'preact';
 import {mobileClosedMessageAvatarStyle, closedChatAvatarImageStyle} from './style';
 
-export default class ChatFloatingButton extends Component {
+export default class ChatFloatingButton extends Component<any, any> {
 
     render({onClick, conf},{}) {
         return (
@@ -26,7 +26,7 @@ export default class ChatFloatingButton extends Component {
                             <img
                                 src={conf.bubbleAvatarUrl}
                                 style={{...closedChatAvatarImageStyle}}
-                            />: <center><br/>{conf.bubbleAvatarUrl}</center>)
+                            />: <div style={{ display: 'flex', alignItems: 'center' }}><br/>{conf.bubbleAvatarUrl}</div>)
                     }
                 </div>
             </div>

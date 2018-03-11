@@ -1,7 +1,7 @@
 import { h, Component } from 'preact';
 import {botman} from './../botman';
 
-export default class ActionType extends Component {
+export default class ActionType extends Component<any, any> {
 
     render(props) {
         const message = props.message;
@@ -30,6 +30,6 @@ export default class ActionType extends Component {
                 additionalParameters: msg.additionalParameters,
                 from: 'chatbot'
             });
-        });
+        }, null);
     }
 }
