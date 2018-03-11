@@ -1,9 +1,9 @@
 import { h, Component } from 'preact';
 import {desktopClosedMessageStyle, desktopIntroMessageStyle, desktopClosedMessageAvatarStyle, closedChatAvatarImageStyle} from './style';
 
-export default class ChatTitleMsg extends Component {
+export default class ChatTitleMsg extends Component<any, any> {
 
-    render({conf},{}) {
+    render({conf: any},{}) {
         return (
             <div style={{position: 'relative', cursor: 'pointer'}} onClick={this.props.onClick}>
                 <div

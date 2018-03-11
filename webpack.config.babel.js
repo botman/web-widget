@@ -1,8 +1,8 @@
-import webpack from 'webpack';
-import ExtractTextPlugin from 'extract-text-webpack-plugin';
-import autoprefixer from 'autoprefixer';
-import CopyWebpackPlugin from 'copy-webpack-plugin';
-import path from 'path';
+const webpack = require('webpack');
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const autoprefixer = require('autoprefixer');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
+const path = require('path');
 const ENV = process.env.NODE_ENV || 'development';
 
 const CSS_MAPS = ENV!=='production';
@@ -10,8 +10,8 @@ const CSS_MAPS = ENV!=='production';
 module.exports = {
 	context: path.resolve(__dirname, "src"),
     entry: {
-        widget: './widget/index.js',
-        chat: './chat/index.js'
+        widget: './widget/index.tsx',
+        chat: './chat/index.tsx'
     },
 
 	output: {
@@ -21,7 +21,7 @@ module.exports = {
 	},
 
 	resolve: {
-		extensions: ['.jsx', '.js', '.json', '.less'],
+		extensions: ['.tsx', '.ts', '.jsx', '.js', '.json', '.less'],
 		modules: [
 			path.resolve(__dirname, "src/lib"),
 			path.resolve(__dirname, "node_modules"),
@@ -43,11 +43,7 @@ module.exports = {
 				enforce: 'pre',
 				use: 'source-map-loader'
 			},
-			{
-				test: /\.jsx?$/,
-				exclude: /node_modules/,
-				use: 'babel-loader'
-			},
+			{ test: /\.tsx?$/, use: { loader: 'awesome-typescript-loader' } },
 			{
 				// Transform our own .(less|css) files with PostCSS and CSS-modules
 				test: /\.(less|css)$/,
@@ -116,7 +112,7 @@ module.exports = {
 		]
 	},
 	plugins: ([
-		new webpack.NoEmitOnErrorsPlugin(),
+//		new webpack.NoEmitOnErrorsPlugin(),
 		new webpack.DefinePlugin({
 			'process.env.NODE_ENV': JSON.stringify(ENV)
 		}),
