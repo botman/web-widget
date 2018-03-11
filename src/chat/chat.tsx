@@ -1,13 +1,24 @@
 import { h, Component } from "preact";
 import MessageArea from "./message-area";
 import { botman } from "./botman";
+import { IConfiguration } from "../widget/configuration";
+import { IMessage } from "./chat-action";
 
-export default class Chat extends Component<any, any> {
+interface IChatProps {
+    userId: string,
+    conf: IConfiguration
+}
+
+interface IChatState {
+    messages: IMessage[],
+}
+
+export default class Chat extends Component<IChatProps, IChatState> {
 
     botman: any;
     input: HTMLInputElement;
 
-    constructor(props) {
+    constructor(props: IChatProps) {
         super(props);
 
         this.botman = botman;
@@ -25,7 +36,7 @@ export default class Chat extends Component<any, any> {
             });
         }
         // Add event listener for widget API
-        window.addEventListener("message", event => {
+        window.addEventListener("message", (event: MessageEvent) => {
             try {
                 this[event.data.method](...event.data.params);
             } catch (e) {
@@ -34,7 +45,7 @@ export default class Chat extends Component<any, any> {
         });
     }
 
-    sayAsBot(text) {
+    sayAsBot(text: string) {
         this.writeToMessages({
             text,
             type: "text",
@@ -42,7 +53,7 @@ export default class Chat extends Component<any, any> {
         });
     }
 
-    say(text, showMessage = true) {
+    say(text: string, showMessage = true) {
         const message = {
             text,
             type: "text",
@@ -50,7 +61,7 @@ export default class Chat extends Component<any, any> {
         };
 
         // Send a message from the html user to the server
-        this.botman.callAPI(message.text, false, null, msg => {
+        this.botman.callAPI(message.text, false, null, (msg: IMessage) => {
             msg.from = "chatbot";
             this.writeToMessages(msg);
         });
@@ -60,7 +71,7 @@ export default class Chat extends Component<any, any> {
         }
     }
 
-    whisper(text) {
+    whisper(text: string) {
         this.say(text, false);
     }
 
@@ -104,7 +115,7 @@ export default class Chat extends Component<any, any> {
         );
     }
 
-	handleKeyPress = e => {
+	handleKeyPress = (e: KeyboardEvent) => {
 	    if (e.keyCode === 13 && this.input.value.replace(/\s/g, "")) {
 	        this.say(this.input.value);
 
@@ -113,7 +124,7 @@ export default class Chat extends Component<any, any> {
 	    }
 	};
 
-	writeToMessages = msg => {
+	writeToMessages = (msg: IMessage) => {
 	    if (typeof msg.time === "undefined") {
 	        msg.time = new Date().toJSON(); //2015-10-26T07:46:36.611Z
 	    }

@@ -1,4 +1,5 @@
 import { h, Component } from 'preact';
+import { IConfiguration } from './configuration';
 
 export default class ChatFrame extends Component<any, any> {
 
@@ -7,7 +8,7 @@ export default class ChatFrame extends Component<any, any> {
         return false;
     }
 
-    render({iFrameSrc, isMobile, conf},{}) {
+    render({iFrameSrc, isMobile, conf}: IChatFrameProps,{}) {
         let dynamicConf = window.botmanWidget || {}; // these configuration are loaded when the chat frame is opened
         let encodedConf = encodeURIComponent(JSON.stringify({...conf, ...dynamicConf}));
         return (
@@ -19,4 +20,11 @@ export default class ChatFrame extends Component<any, any> {
                 style='background-color:transparent' />
         );
     }
+}
+
+
+interface IChatFrameProps {
+    iFrameSrc: string,
+    conf: IConfiguration,
+    isMobile: boolean,
 }

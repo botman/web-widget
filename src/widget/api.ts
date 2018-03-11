@@ -4,7 +4,7 @@ export default class Api {
 
     widget: Widget;
 
-    constructor(widget) {
+    constructor(widget: Widget) {
         this.widget = widget;
     }
 
@@ -40,7 +40,7 @@ export default class Api {
         });
     }
 
-    sayAsBot(text) {
+    sayAsBot(text: string) {
         this.getChatWidget()
             .then((contentWindow: Window) => {
                 contentWindow.postMessage({
@@ -55,7 +55,7 @@ export default class Api {
             });
     }
 
-    say(text) {
+    say(text: string) {
         this.getChatWidget()
             .then((contentWindow: Window) => {
                 contentWindow.postMessage({
@@ -70,7 +70,7 @@ export default class Api {
             });
     }
 
-    whisper(text) {
+    whisper(text: string) {
 
         this.getChatWidget()
             .then((contentWindow: Window) => {

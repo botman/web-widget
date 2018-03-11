@@ -1,19 +1,20 @@
 import axios from 'axios';
+import { IAttachment, IMessage } from './chat-action';
 
 class BotMan {
 
 	userId: string;
 	chatServer: string;
 
-    setUserId(userId) {
+    setUserId(userId: string) {
         this.userId = userId;
     }
 
-    setChatServer(chatServer) {
+    setChatServer(chatServer: string) {
         this.chatServer = chatServer;
     }
 
-    callAPI = (text, interactive = false, attachment = null, perMessageCallback: Function, callback: Function) => {
+    callAPI = (text: string, interactive = false, attachment: IAttachment = null, perMessageCallback: Function, callback: Function) => {
     	let data = new FormData();
     	const postData = {
     		driver: 'web',
@@ -28,7 +29,7 @@ class BotMan {
     	axios.post(this.chatServer, data).then(response => {
     		const messages = response.data.messages || [];
 
-    		messages.forEach(msg => {
+    		messages.forEach((msg: IMessage) => {
     			if (perMessageCallback) {
     				perMessageCallback(msg);
     			}

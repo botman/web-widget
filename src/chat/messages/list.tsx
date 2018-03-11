@@ -2,10 +2,16 @@ import { h, Component } from 'preact';
 import {botman} from './../botman';
 import TextType from './text';
 import ActionType from './action';
+import { IButton, IMessage } from '../chat-action';
 
-export default class ListType extends Component<any, any> {
+interface IListTypeProps {
+    message: IMessage,
+    messageHandler: Function,
+}
 
-    getButton(button) {
+export default class ListType extends Component<IListTypeProps, any> {
+
+    getButton(button: IButton) {
         if (button.type === 'postback') {
             return <div class="btn" onClick={() => this.performAction(button)}>
                 {button.title}
@@ -16,15 +22,15 @@ export default class ListType extends Component<any, any> {
         }
     }
 
-    render(props) {
+    render(props: IListTypeProps) {
         const message = props.message;
 
-        const globalButtons = message.globalButtons.map((button) => {
+        const globalButtons = message.globalButtons.map((button: IButton) => {
             return this.getButton(button);
         });
 
         const lists = message.elements.map((element) => {
-            const elementButtons = element.buttons.map((button) => {
+            const elementButtons = element.buttons.map((button: IButton) => {
                 return this.getButton(button);
             });
 
@@ -46,8 +52,8 @@ export default class ListType extends Component<any, any> {
         );
     }
 
-    performAction(button) {
-        botman.callAPI(button.payload, true, null, (msg) => {
+    performAction(button: IButton) {
+        botman.callAPI(button.payload, true, null, (msg: IMessage) => {
             this.props.messageHandler({
                 text: msg.text,
                 type: msg.type,

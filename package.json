@@ -42,6 +42,7 @@
     ]
   },
   "devDependencies": {
+    "@types/dateformat": "^1.0.1",
     "autoprefixer": "^8.0.0",
     "awesome-typescript-loader": "^4.0.1",
     "babel": "^6.5.2",

@@ -2,10 +2,16 @@ import { h, Component } from 'preact';
 import {botman} from './../botman';
 import TextType from './text';
 import ActionType from './action';
+import { IMessage, IButton } from '../chat-action';
 
-export default class ButtonsType extends Component<any, any> {
+interface IButtonTypeProps {
+    message: IMessage,
+    messageHandler: Function,
+}
 
-    render(props) {
+export default class ButtonsType extends Component<IButtonTypeProps, any> {
+
+    render(props: IButtonTypeProps) {
         const message = props.message;
 
         const buttons = message.buttons.map((button) => {
@@ -27,8 +33,8 @@ export default class ButtonsType extends Component<any, any> {
         );
     }
 
-    performAction(button) {
-        botman.callAPI(button.payload, true, null, (msg) => {
+    performAction(button: IButton) {
+        botman.callAPI(button.payload, true, null, (msg: IMessage) => {
             this.props.messageHandler({
                 text: msg.text,
                 type: msg.type,

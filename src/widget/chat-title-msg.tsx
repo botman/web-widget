@@ -3,7 +3,7 @@ import {desktopClosedMessageStyle, desktopIntroMessageStyle, desktopClosedMessag
 
 export default class ChatTitleMsg extends Component<any, any> {
 
-    render({conf},{}) {
+    render({conf}: IChatTitleMsgProps,{}) {
         return (
             <div style={{position: 'relative', cursor: 'pointer'}} onClick={this.props.onClick}>
                 <div
@@ -30,5 +30,12 @@ export default class ChatTitleMsg extends Component<any, any> {
                 </div>
             </div>
         );
+    }
+}
+
+interface IChatTitleMsgProps {
+    conf: { 
+        bubbleAvatarUrl: string,
+        bubbleBackground: string
     }
 }

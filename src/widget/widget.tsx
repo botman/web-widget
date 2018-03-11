@@ -11,20 +11,16 @@ import {
     mobileClosedWrapperStyle,
     desktopClosedWrapperStyleChat
 } from './style';
+import { IConfiguration } from './configuration';
+
 
 declare global {
-    interface Window { botmanChatWidget: Api; }
+    interface Window { attachEvent: Function, botmanChatWidget: Api }
 }
 
-interface WidgetStateType {
-    isChatOpen: boolean,
-    pristine: boolean,
-    wasChatOpened: boolean,
-}
+export default class Widget extends Component<any, IWidgetState> {
 
-export default class Widget extends Component<any, WidgetStateType> {
-
-    state: WidgetStateType;
+    state: IWidgetState;
 
     constructor() {
         super();
@@ -37,7 +33,7 @@ export default class Widget extends Component<any, WidgetStateType> {
         window.botmanChatWidget = new Api(this);
     }
 
-    render(props, state: WidgetStateType) {
+    render(props: IWidgetProps, state: IWidgetState) {
 
         const {conf, isMobile} = props;
         const {isChatOpen, pristine} = state;
@@ -150,4 +146,17 @@ export default class Widget extends Component<any, WidgetStateType> {
     	return (this.getCookie() !== false);
     }
 
+}
+
+interface IWidgetState {
+    isChatOpen: boolean,
+    pristine: boolean,
+    wasChatOpened: boolean,
+}
+
+
+interface IWidgetProps {
+    iFrameSrc: string,
+    conf: IConfiguration,
+    isMobile: boolean,
 }

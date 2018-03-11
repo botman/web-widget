@@ -12,7 +12,7 @@ if (window.attachEvent) {
     window.addEventListener('load', injectChat, false);
 }
 
-function getUrlParameter(name, defaults = '') {
+function getUrlParameter(name: string, defaults = '') {
     name = name.replace(/[[]/, '\\[').replace(/[]]/, '\\]');
     let regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
     let results = regex.exec(document.getElementById('botmanWidget').getAttribute('src'));

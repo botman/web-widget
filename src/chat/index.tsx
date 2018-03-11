@@ -8,7 +8,7 @@ if (window.attachEvent) {
 }
 
 let conf = {
-    userId: null,
+    userId: Object,
 };
 const confString = getUrlParameter('conf');
 if (confString) {
@@ -35,7 +35,7 @@ function injectChat() {
 
 
 
-function getUrlParameter(name) {
+function getUrlParameter(name: string) {
     name = name.replace(/[[]/, '\\[').replace(/[]]/, '\\]');
     let regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
     let results = regex.exec(location.search);
