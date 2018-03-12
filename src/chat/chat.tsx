@@ -115,16 +115,49 @@ export default class Chat extends Component<IChatProps, IChatState> {
 	    }
 	};
 
+    static generateUuid() {
+        let uuid = '', ii;
+        for (ii = 0; ii < 32; ii += 1) {
+            switch (ii) {
+                case 8:
+                case 20:
+                    uuid += '-';
+                    uuid += (Math.random() * 16 | 0).toString(16);
+                    break;
+                case 12:
+                    uuid += '-';
+                    uuid += '4';
+                    break;
+                case 16:
+                    uuid += '-';
+                    uuid += (Math.random() * 4 | 8).toString(16);
+                    break;
+                default:
+                    uuid += (Math.random() * 16 | 0).toString(16);
+            }
+        }
+        return uuid;
+    }
+
 	writeToMessages = (msg: IMessage) => {
-	    if (typeof msg.time === "undefined") {
-	        msg.time = new Date().toJSON(); //2015-10-26T07:46:36.611Z
-	    }
+        if (typeof msg.time === "undefined") {
+            msg.time = new Date().toJSON();
+        }
+        if (typeof msg.visible === "undefined") {
+            msg.visible = false;
+        }
+        if (typeof msg.timeout === "undefined") {
+            msg.timeout = 0;
+        }
+        if (typeof msg.id === "undefined") {
+            msg.id = Chat.generateUuid();
+        }
+
 	    if (msg.attachment === null) {
 	        msg.attachment = {}; // TODO: This renders IAttachment useless
 	    }
 
 	    this.state.messages.push(msg);
-
 	    this.setState({
 	        messages: this.state.messages
 	    });

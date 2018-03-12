@@ -3,14 +3,26 @@
 export interface IMessageTypeProps {
     message: IMessage,
     messageHandler: Function,
+    onVisibilityChange: Function,
+    timeout: number,
     conf?: IConfiguration,
 }
 
+export interface IMessageTypeState {
+    visible: boolean,
+    visibilityChanged: boolean,
+    attachmentsVisible: boolean
+}
+
 export interface IMessage {
+    id?: string,
     text: string,
     type: "text" | "list",
+    timeout?: number,
     from: string,
     time?: string,
+    visibilityChanged?: boolean;
+    visible?: boolean,
     actions?: IAction[],
     buttons?: IButton[],
     attachment?: IAttachment,

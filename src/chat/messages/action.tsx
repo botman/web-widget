@@ -1,8 +1,9 @@
 import { h, Component } from 'preact';
 import {botman} from './../botman';
+import MessageType from "./messagetype";
 import { IMessageTypeProps, IAction, IMessage } from '../../typings';
 
-export default class ActionType extends Component<IMessageTypeProps, any> {
+export default class Action extends MessageType {
 
     render(props: IMessageTypeProps) {
         const message = props.message;
@@ -16,13 +17,16 @@ export default class ActionType extends Component<IMessageTypeProps, any> {
         return (
             <div>
                 {message.text && <div>{message.text}</div>}
-                <div>{buttons}</div>
+                {this.state.attachmentsVisible ?
+                    <div>{buttons}</div>
+                    : ''}
             </div>
         );
     }
 
     performAction(action: IAction) {
         botman.callAPI(action.value, true, null, (msg: IMessage) => {
+            this.state.attachmentsVisible = false;
             this.props.messageHandler({
                 text: msg.text,
                 type: msg.type,
