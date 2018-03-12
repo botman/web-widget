@@ -1,8 +1,8 @@
 import { h, Component } from 'preact';
 
-export default class ArrowIcon extends Component {
+export default class ArrowIcon extends Component<IArrowIconProps, any> {
 
-    render({isOpened},{}) {
+    render({ isOpened }: IArrowIconProps,{}) {
         return (
             <div>
                 {/* keyboard arrow up */}
@@ -38,4 +38,8 @@ export default class ArrowIcon extends Component {
             </div>
         );
     }
+}
+
+interface IArrowIconProps {
+    isOpened: boolean
 }

@@ -8,10 +8,10 @@ if (window.attachEvent) {
     window.addEventListener('load', injectChat, false);
 }
 
-function getUrlParameter(name, defaults = '') {
+function getUrlParameter(name: string, defaults = '') {
     name = name.replace(/[[]/, '\\[').replace(/[]]/, '\\]');
     let regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
-    let results = regex.exec(document.getElementById('botmanWidget').src);
+    let results = regex.exec(document.getElementById('botmanWidget').getAttribute('src'));
     return results === null ? defaults : decodeURIComponent(results[1].replace(/\+/g, ' '));
 }
 function injectChat() {
@@ -39,4 +39,8 @@ function injectChat() {
         root
     );
 
+}
+
+declare global {
+    interface Window { attachEvent: Function, botmanWidget: Widget }
 }

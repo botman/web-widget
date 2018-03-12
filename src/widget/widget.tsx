@@ -11,8 +11,11 @@ import {
     mobileClosedWrapperStyle,
     desktopClosedWrapperStyleChat
 } from './style';
+import { IConfiguration } from '../typings';
 
-export default class Widget extends Component {
+export default class Widget extends Component<any, IWidgetState> {
+
+    state: IWidgetState;
 
     constructor() {
         super();
@@ -25,8 +28,10 @@ export default class Widget extends Component {
         window.botmanChatWidget = new Api(this);
     }
 
-    render({conf, isMobile}, {isChatOpen, pristine}) {
+    render(props: IWidgetProps, state: IWidgetState) {
 
+        const {conf, isMobile} = props;
+        const {isChatOpen, pristine} = state;
         const wrapperWidth = {width: isMobile ? conf.mobileWidth : conf.desktopWidth};
         const desktopHeight = (window.innerHeight - 100 < conf.desktopHeight) ? window.innerHeight - 90 : conf.desktopHeight;
         conf.wrapperHeight = desktopHeight;
@@ -89,7 +94,8 @@ export default class Widget extends Component {
     toggle = () => {
     	let stateData = {
     		pristine: false,
-    		isChatOpen: !this.state.isChatOpen
+            isChatOpen: !this.state.isChatOpen,
+            wasChatOpened: false,
     	};
     	if (!this.state.isChatOpen && !this.wasChatOpened()) {
     		this.setCookie();
@@ -113,11 +119,11 @@ export default class Widget extends Component {
     }
 
     setCookie() {
-    	let date = new Date();
+    	let date: IDate = new Date();
     	let expirationTime = parseInt(this.props.conf.cookieValidInDays);
     	date.setTime(date.getTime() + (expirationTime * 24 * 60 * 60 * 1000));
 
-    	document.cookie = `chatwasopened=1; expires=${date.toGMTString()}; path=/`;
+    	document.cookie = `chatwasopened=1; expires=${date.toUTCString()}; path=/`;
     }
 
     getCookie() {
@@ -135,4 +141,26 @@ export default class Widget extends Component {
     	return (this.getCookie() !== false);
     }
 
+}
+
+interface IWidgetState {
+    isChatOpen: boolean,
+    pristine: boolean,
+    wasChatOpened: boolean,
+}
+
+
+interface IWidgetProps {
+    iFrameSrc: string,
+    conf: IConfiguration,
+    isMobile: boolean,
+}
+
+declare global {
+    interface Window { attachEvent: Function, botmanChatWidget: Api }
+}
+
+// FIXME: toGMTString is deprecated
+interface IDate extends Date {
+  toUTCString(): string;
 }

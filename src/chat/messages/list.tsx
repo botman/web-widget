@@ -2,10 +2,11 @@ import { h, Component } from 'preact';
 import {botman} from './../botman';
 import TextType from './text';
 import ActionType from './action';
+import { IButton, IMessage, IMessageTypeProps } from '../../typings';
 
-export default class ListType extends Component {
+export default class ListType extends Component<IMessageTypeProps, any> {
 
-    getButton(button) {
+    getButton(button: IButton) {
         if (button.type === 'postback') {
             return <div class="btn" onClick={() => this.performAction(button)}>
                 {button.title}
@@ -16,15 +17,15 @@ export default class ListType extends Component {
         }
     }
 
-    render(props) {
+    render(props: IMessageTypeProps) {
         const message = props.message;
 
-        const globalButtons = message.globalButtons.map((button) => {
+        const globalButtons = message.globalButtons.map((button: IButton) => {
             return this.getButton(button);
         });
 
         const lists = message.elements.map((element) => {
-            const elementButtons = element.buttons.map((button) => {
+            const elementButtons = element.buttons.map((button: IButton) => {
                 return this.getButton(button);
             });
 
@@ -46,8 +47,8 @@ export default class ListType extends Component {
         );
     }
 
-    performAction(button) {
-        botman.callAPI(button.payload, true, null, (msg) => {
+    performAction(button: IButton) {
+        botman.callAPI(button.payload, true, null, (msg: IMessage) => {
             this.props.messageHandler({
                 text: msg.text,
                 type: msg.type,
@@ -56,6 +57,6 @@ export default class ListType extends Component {
                 additionalParameters: msg.additionalParameters,
                 from: 'chatbot'
             });
-        });
+        }, null);
     }
 }

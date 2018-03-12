@@ -1,9 +1,11 @@
 import { h, Component } from 'preact';
 import {botman} from './botman';
+import { IAction, IMessage } from '../typings';
 
-export default class ChatAction extends Component {
 
-    render(props) {
+export default class ChatAction extends Component<IChatActionProps, any> {
+
+    render(props: IChatActionProps) {
         return (
             <div class="btn" onClick={() => this.performAction(props.action)}>
                 {props.action.text}
@@ -11,8 +13,8 @@ export default class ChatAction extends Component {
         );
     }
 
-    performAction(action) {
-        botman.callAPI(action.value, true, null, (msg) => {
+    performAction(action: IAction) {
+        botman.callAPI(action.value, true, null, (msg: IMessage) => {
             this.props.messageHandler({
                 text: msg.text,
                 type: msg.type,
@@ -21,6 +23,11 @@ export default class ChatAction extends Component {
                 additionalParameters: msg.additionalParameters,
                 from: 'chatbot'
             });
-        });
+        }, null);
     }
+}
+
+interface IChatActionProps {
+    messageHandler: Function,
+    action: IAction,
 }

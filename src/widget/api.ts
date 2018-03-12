@@ -1,9 +1,12 @@
+import Widget from './widget';
+
 export default class Api {
 
-    constructor(widget) {
+    widget: Widget;
+
+    constructor(widget: Widget) {
         this.widget = widget;
     }
-
 
     open() {
         this.widget.open();
@@ -24,12 +27,12 @@ export default class Api {
     getChatWidget() {
         return new Promise((resolve, reject) => {
             if (this.isOpen()) {
-                return resolve(document.getElementById('chatBotManFrame').contentWindow);
+                return resolve((document.getElementById('chatBotManFrame') as HTMLIFrameElement).contentWindow);
             }
             try {
                 this.open();
                 setTimeout(() => {
-                    resolve(document.getElementById('chatBotManFrame').contentWindow);
+                    resolve((document.getElementById('chatBotManFrame') as HTMLIFrameElement).contentWindow);
                 }, 750);
             } catch (e) {
                 reject(e);
@@ -37,9 +40,9 @@ export default class Api {
         });
     }
 
-    sayAsBot(text) {
+    sayAsBot(text: string) {
         this.getChatWidget()
-            .then((contentWindow) => {
+            .then((contentWindow: Window) => {
                 contentWindow.postMessage({
                     method: 'sayAsBot',
                     params: [
@@ -52,9 +55,9 @@ export default class Api {
             });
     }
 
-    say(text) {
+    say(text: string) {
         this.getChatWidget()
-            .then((contentWindow) => {
+            .then((contentWindow: Window) => {
                 contentWindow.postMessage({
                     method: 'say',
                     params: [
@@ -67,10 +70,10 @@ export default class Api {
             });
     }
 
-    whisper(text) {
+    whisper(text: string) {
 
         this.getChatWidget()
-            .then((contentWindow) => {
+            .then((contentWindow: Window) => {
                 contentWindow.postMessage({
                     method: 'whisper',
                     params: [
