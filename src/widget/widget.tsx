@@ -123,7 +123,7 @@ export default class Widget extends Component<any, IWidgetState> {
     	let expirationTime = parseInt(this.props.conf.cookieValidInDays);
     	date.setTime(date.getTime() + (expirationTime * 24 * 60 * 60 * 1000));
 
-    	document.cookie = `chatwasopened=1; expires=${date.toGMTString()}; path=/`;
+    	document.cookie = `chatwasopened=1; expires=${date.toUTCString()}; path=/`;
     }
 
     getCookie() {
@@ -162,5 +162,5 @@ declare global {
 
 // FIXME: toGMTString is deprecated
 interface IDate extends Date {
-  toGMTString?(): string;
+  toUTCString(): string;
 }

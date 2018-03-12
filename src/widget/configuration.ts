@@ -22,7 +22,5 @@ export const defaultConfiguration: IConfiguration = {
     aboutText: '⚡ Powered by BotMan',
     chatId: '',
     userId: '',
-    // FIXME: this is overrided in widget.tsx, probably shouldn't be in conf
-    wrapperHeight: 100,
     alwaysUseFloatingButton: false,
 };

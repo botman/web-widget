@@ -21,7 +21,7 @@ class BotMan {
     		userId: this.userId,
     		message: text,
     		attachment: attachment as Blob,
-    		interactive: interactive ? '0' : '1' // FIXME: 
+    		interactive: interactive ? '0' : '1'
     	};
 
     	Object.keys(postData).forEach(key => data.append(key, postData[key]));
@@ -29,11 +29,11 @@ class BotMan {
     	axios.post(this.chatServer, data).then(response => {
     		const messages = response.data.messages || [];
 
-    		messages.forEach((msg: IMessage) => {
-    			if (perMessageCallback) {
-    				perMessageCallback(msg);
-    			}
-    		});
+			if (perMessageCallback) {
+				messages.forEach((msg: IMessage) => {
+					perMessageCallback(msg);
+				});
+			}
 
     		if (callback) {
     			callback(response.data);

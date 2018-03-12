@@ -93,6 +93,6 @@ export interface IConfiguration {
     aboutText: string,
     chatId: string,
     userId: string,
-    wrapperHeight: number,
+    wrapperHeight?: number,
     alwaysUseFloatingButton: boolean,
 }
