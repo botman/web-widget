@@ -40,50 +40,31 @@ export default class Api {
         });
     }
 
-    sayAsBot(text: string) {
+    postChatMessage(text: string, method: string) {
         this.getChatWidget()
-            .then((contentWindow: Window) => {
-                contentWindow.postMessage({
-                    method: 'sayAsBot',
-                    params: [
-                        text
-                    ]
-                }, '*');
-            })
-            .catch(() => {
-                console.error('Unable to get BotMan widget.');
-            });
+        .then((contentWindow: Window) => {
+            contentWindow.postMessage({
+                method,
+                params: [
+                    text
+                ]
+            }, '*');
+        })
+        .catch(() => {
+            console.error('Unable to get BotMan widget.');
+        });
+    }
+
+    sayAsBot(text: string) {
+        this.postChatMessage(text, 'sayAsBot');
     }
 
     say(text: string) {
-        this.getChatWidget()
-            .then((contentWindow: Window) => {
-                contentWindow.postMessage({
-                    method: 'say',
-                    params: [
-                        text
-                    ]
-                }, '*');
-            })
-            .catch(() => {
-                console.error('Unable to get BotMan widget.');
-            });
+        this.postChatMessage(text, 'say');
     }
 
     whisper(text: string) {
-
-        this.getChatWidget()
-            .then((contentWindow: Window) => {
-                contentWindow.postMessage({
-                    method: 'whisper',
-                    params: [
-                        text
-                    ]
-                }, '*');
-            })
-            .catch(() => {
-                console.error('Unable to get BotMan widget.');
-            });
+        this.postChatMessage(text, 'whisper');
     }
 
 }
