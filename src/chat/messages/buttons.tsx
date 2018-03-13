@@ -2,7 +2,7 @@ import { h, Component } from 'preact';
 import {botman} from './../botman';
 import TextType from './text';
 import ActionType from './action';
-import { IButton, IMessage, IMessageTypeProps } from '../../typings';
+import { IButton, IMessage, IMessageTypeProps, ButtonType } from '../../typings';
 
 export default class ButtonsType extends Component<IMessageTypeProps, any> {
 
@@ -10,12 +10,12 @@ export default class ButtonsType extends Component<IMessageTypeProps, any> {
         const message = props.message;
 
         const buttons = message.buttons.map((button) => {
-            if (button.type === 'postback') {
+            if (button.type === ButtonType.POSTBACK) {
                 return <div class="btn" onClick={() => this.performAction(button)}>
                     {button.title}
                 </div>;
             }
-            if (button.type === 'web_url') {
+            if (button.type === ButtonType.WEB_URL) {
                 return <a class="btn" href={button.url} target="_blank">{button.title}</a>;
             }
         });
