@@ -1,6 +1,7 @@
 import { h, render } from 'preact';
 import Chat from './chat';
 import { IConfiguration } from '../typings';
+import { getUrlParameter, generateRandomId } from '../utils';
 
 if (window.attachEvent) {
     window.attachEvent('onload', injectChat);
@@ -10,7 +11,7 @@ if (window.attachEvent) {
 
 let conf = {};
 
-const confString = getUrlParameter('conf');
+const confString = getUrlParameter(location.search, 'conf');
 if (confString) {
     try {
         conf = JSON.parse(confString);
@@ -33,17 +34,7 @@ function injectChat() {
     );
 }
 
-function getUrlParameter(name: string) {
-    name = name.replace(/[[]/, '\\[').replace(/[]]/, '\\]');
-    let regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
-    let results = regex.exec(location.search);
-    return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
-}
-
 function getUserId() {
     return (conf as IConfiguration).userId || generateRandomId();
 }
 
-function generateRandomId() {
-    return Math.random().toString(36).substr(2, 6);
-}
