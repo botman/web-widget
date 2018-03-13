@@ -24,66 +24,45 @@ export default class Api {
         return this.widget.state.isChatOpen === true;
     }
 
-    getChatWidget() {
-        return new Promise((resolve, reject) => {
-            if (this.isOpen()) {
-                return resolve((document.getElementById('chatBotManFrame') as HTMLIFrameElement).contentWindow);
-            }
-            try {
-                this.open();
-                setTimeout(() => {
-                    resolve((document.getElementById('chatBotManFrame') as HTMLIFrameElement).contentWindow);
-                }, 750);
-            } catch (e) {
-                reject(e);
-            }
-        });
+    callChatWidget(payload: Object) {
+        if (this.isOpen()) {
+            (document.getElementById('chatBotManFrame') as HTMLIFrameElement).contentWindow.postMessage(payload, '*');
+        }
+        try {
+            this.open();
+            setTimeout(() => {
+                (document.getElementById('chatBotManFrame') as HTMLIFrameElement).contentWindow.postMessage(payload, '*');
+            }, 750);
+        } catch (e) {
+            console.error(e);
+        }
     }
 
     sayAsBot(text: string) {
-        this.getChatWidget()
-            .then((contentWindow: Window) => {
-                contentWindow.postMessage({
-                    method: 'sayAsBot',
-                    params: [
-                        text
-                    ]
-                }, '*');
-            })
-            .catch(() => {
-                console.error('Unable to get BotMan widget.');
-            });
+        this.callChatWidget({
+            method: 'sayAsBot',
+            params: [
+                text
+            ]
+        });
     }
 
     say(text: string) {
-        this.getChatWidget()
-            .then((contentWindow: Window) => {
-                contentWindow.postMessage({
-                    method: 'say',
-                    params: [
-                        text
-                    ]
-                }, '*');
-            })
-            .catch(() => {
-                console.error('Unable to get BotMan widget.');
-            });
+        this.callChatWidget({
+            method: 'say',
+            params: [
+                text
+            ]
+        });
     }
 
     whisper(text: string) {
-
-        this.getChatWidget()
-            .then((contentWindow: Window) => {
-                contentWindow.postMessage({
-                    method: 'whisper',
-                    params: [
-                        text
-                    ]
-                }, '*');
-            })
-            .catch(() => {
-                console.error('Unable to get BotMan widget.');
-            });
+        this.callChatWidget({
+            method: 'whisper',
+            params: [
+                text
+            ]
+        });
     }
 
 }
