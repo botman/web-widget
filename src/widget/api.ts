@@ -27,14 +27,15 @@ export default class Api {
     callChatWidget(payload: Object) {
         if (this.isOpen()) {
             (document.getElementById('chatBotManFrame') as HTMLIFrameElement).contentWindow.postMessage(payload, '*');
-        }
-        try {
-            this.open();
-            setTimeout(() => {
-                (document.getElementById('chatBotManFrame') as HTMLIFrameElement).contentWindow.postMessage(payload, '*');
-            }, 750);
-        } catch (e) {
-            console.error(e);
+        } else {
+            try {
+                this.open();
+                setTimeout(() => {
+                    (document.getElementById('chatBotManFrame') as HTMLIFrameElement).contentWindow.postMessage(payload, '*');
+                }, 750);
+            } catch (e) {
+                console.error(e);
+            }
         }
     }
 
