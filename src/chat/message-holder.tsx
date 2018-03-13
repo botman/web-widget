@@ -20,6 +20,19 @@ const messageTypes = {
 
 export default class MessageHolder extends Component<IMessageHolderProps, any> {
 
+    scrollToBottom = () => {
+        const messageArea = document.getElementById('messageArea');
+        messageArea.scrollTop = messageArea.scrollHeight;
+    };
+
+    componentDidMount() {
+        this.scrollToBottom();
+    }
+
+    componentDidUpdate() {
+        this.scrollToBottom();
+    }
+
     messageVisibilityChange = (message: IMessage, messageState: IMessageTypeState) => {
         const msg = this.props.message;
         if (msg.id === message.id && msg.visible !== messageState.visible) {

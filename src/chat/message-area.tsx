@@ -9,31 +9,6 @@ import TypingIndicator from "./messages/typing-indicator";
 import MessageHolder from "./message-holder";
 
 export default class MessageArea extends Component<IMessageAreaProps, any> {
-    scrollToBottom = () => {
-    	const messageArea = document.getElementById('messageArea');
-    	messageArea.scrollTop = messageArea.scrollHeight;
-    };
-
-    executeJS = () => {
-    	const scripts = document.getElementById('messageArea').getElementsByTagName('script');
-    	for (let i = 0; i < scripts.length; i++) {
-    		try {
-    			eval(scripts[i].innerHTML);
-    		} catch (error) {
-    			// console.log('Error caught:',error);
-    		}
-    	}
-    };
-
-    componentDidMount() {
-    	this.scrollToBottom();
-    	this.executeJS();
-    }
-
-    componentDidUpdate() {
-    	this.scrollToBottom();
-    	this.executeJS();
-    }
 
     render(props: IMessageAreaProps, {}) {
     	const styleChat = 'height:'+(props.conf.wrapperHeight-60)+'px;';

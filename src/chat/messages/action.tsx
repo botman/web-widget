@@ -30,6 +30,7 @@ export default class Action extends MessageType {
             this.props.messageHandler({
                 text: msg.text,
                 type: msg.type,
+                timeout: msg.timeout,
                 actions: msg.actions,
                 attachment: msg.attachment,
                 additionalParameters: msg.additionalParameters,
