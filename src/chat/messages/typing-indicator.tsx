@@ -11,12 +11,10 @@ export default class TypingIndicator extends MessageType {
         );
     }
 
-    componentDidMount() {
-        super.componentDidMount();
-
+    onVisibilityChange = () => {
         setTimeout(() => {
             this.state.visible = false;
             this.props.onVisibilityChange(this.props.message, this.state);
         }, this.props.message.timeout * 1000);
-    }
+    };
 }
