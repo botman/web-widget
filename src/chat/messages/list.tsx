@@ -1,11 +1,9 @@
 import { h, Component } from 'preact';
-import {botman} from './../botman';
-import TextType from './text';
-import ActionType from './action';
+import {botman} from '../botman';
+import MessageType from "./messagetype";
 import { IButton, IMessage, IMessageTypeProps, ButtonType } from '../../typings';
-import ButtonsType from './buttons';
 
-export default class ListType extends Component<IMessageTypeProps, any> {
+export default class ListType extends MessageType {
 
     getButton(button: IButton) {
         if (button.type === ButtonType.POSTBACK) {

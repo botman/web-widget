@@ -3,8 +3,9 @@ import {botman} from './../botman';
 import TextType from './text';
 import ActionType from './action';
 import { IButton, IMessage, IMessageTypeProps, ButtonType } from '../../typings';
+import MessageType from "./messagetype";
 
-export default class ButtonsType extends Component<IMessageTypeProps, any> {
+export default class ButtonsType extends MessageType {
 
     render(props: IMessageTypeProps) {
         const message = props.message;
@@ -19,17 +20,17 @@ export default class ButtonsType extends Component<IMessageTypeProps, any> {
                 return <a class="btn" href={button.url} target="_blank">{button.title}</a>;
             }
         });
-
         return (
             <div>
                 {message.text}
-                {buttons}
+                {this.state.attachmentsVisible ? buttons : ''}
             </div>
         );
     }
 
     performAction(button: IButton) {
         botman.callAPI(button.payload, true, null, (msg: IMessage) => {
+            this.state.attachmentsVisible = false;
             this.props.messageHandler({
                 text: msg.text,
                 type: msg.type,
