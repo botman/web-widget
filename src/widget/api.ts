@@ -24,47 +24,46 @@ export default class Api {
         return this.widget.state.isChatOpen === true;
     }
 
-    getChatWidget() {
-        return new Promise((resolve, reject) => {
-            if (this.isOpen()) {
-                return resolve((document.getElementById('chatBotManFrame') as HTMLIFrameElement).contentWindow);
-            }
+    callChatWidget(payload: Object) {
+        if (this.isOpen()) {
+            (document.getElementById('chatBotManFrame') as HTMLIFrameElement).contentWindow.postMessage(payload, '*');
+        } else {
             try {
                 this.open();
                 setTimeout(() => {
-                    resolve((document.getElementById('chatBotManFrame') as HTMLIFrameElement).contentWindow);
+                    (document.getElementById('chatBotManFrame') as HTMLIFrameElement).contentWindow.postMessage(payload, '*');
                 }, 750);
             } catch (e) {
-                reject(e);
+                console.error(e);
             }
-        });
-    }
-
-    postChatMessage(text: string, method: string) {
-        this.getChatWidget()
-        .then((contentWindow: Window) => {
-            contentWindow.postMessage({
-                method,
-                params: [
-                    text
-                ]
-            }, '*');
-        })
-        .catch(() => {
-            console.error('Unable to get BotMan widget.');
-        });
+        }
     }
 
     sayAsBot(text: string) {
-        this.postChatMessage(text, 'sayAsBot');
+        this.callChatWidget({
+            method: 'sayAsBot',
+            params: [
+                text
+            ]
+        });
     }
 
     say(text: string) {
-        this.postChatMessage(text, 'say');
+        this.callChatWidget({
+            method: 'say',
+            params: [
+                text
+            ]
+        });
     }
 
     whisper(text: string) {
-        this.postChatMessage(text, 'whisper');
+        this.callChatWidget({
+            method: 'whisper',
+            params: [
+                text
+            ]
+        });
     }
 
 }

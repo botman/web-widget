@@ -2,9 +2,17 @@
 
 export interface IMessageTypeProps {
     message: IMessage,
+    calculatedTimeout?: number,
     messageHandler: Function,
     onVisibilityChange: Function,
     timeout: number,
+    conf?: IConfiguration,
+}
+
+export interface IMessageHolderProps {
+    message: IMessage,
+    calculatedTimeout: number,
+    messageHandler: Function,
     conf?: IConfiguration,
 }
 

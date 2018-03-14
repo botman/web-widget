@@ -12,6 +12,8 @@ export default abstract class MessageType extends Component<IMessageTypeProps, I
         };
     }
 
+    onVisibilityChange = () => {};
+
     /**
      * Check if we have a timeout
      */
@@ -19,6 +21,7 @@ export default abstract class MessageType extends Component<IMessageTypeProps, I
         setTimeout(() => {
             this.state.visible = true;
             this.state.visibilityChanged = true;
+            this.onVisibilityChange();
             this.props.onVisibilityChange(this.props.message, this.state);
         }, this.props.timeout || 0);
     }
