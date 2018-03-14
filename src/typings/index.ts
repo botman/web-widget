@@ -61,6 +61,11 @@ export interface IButton {
     payload: string,
 }
 
+export enum ButtonType {
+    POSTBACK = 'postback',
+    WEB_URL = 'web_url',
+}
+
 export interface IAction {
     text: string,
     value: string,

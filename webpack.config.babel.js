@@ -28,7 +28,7 @@ module.exports = {
 			'node_modules'
 		],
 		alias: {
-			typings: path.resolve(__dirname, "src/typings"),
+			assets: path.resolve(__dirname, "src/assets"),
 			components: path.resolve(__dirname, "src/components"),    // used for tests
 			style: path.resolve(__dirname, "src/style"),
 			'react': 'preact-compat',
@@ -107,7 +107,7 @@ module.exports = {
 				use: 'raw-loader'
 			},
 			{
-				test: /\.(svg|woff2?|ttf|eot|jpe?g|png|gif)(\?.*)?$/i,
+				test: /\.(woff2?|ttf|eot|jpe?g|png|gif)(\?.*)?$/i,
 				use: ENV==='production' ? 'file-loader' : 'url-loader'
 			}
 		]

@@ -12,6 +12,7 @@ import {
     desktopClosedWrapperStyleChat
 } from './style';
 import { IConfiguration } from '../typings';
+import { setCookie, getCookie } from '../utils';
 
 export default class Widget extends Component<any, IWidgetState> {
 
@@ -98,7 +99,7 @@ export default class Widget extends Component<any, IWidgetState> {
             wasChatOpened: false,
     	};
     	if (!this.state.isChatOpen && !this.wasChatOpened()) {
-    		this.setCookie();
+    		setCookie('chatwasopened', 1, this.props.conf.cookieValidInDays);
     		stateData.wasChatOpened = true;
     	}
     	this.setState(stateData);
@@ -118,27 +119,8 @@ export default class Widget extends Component<any, IWidgetState> {
         });
     }
 
-    setCookie() {
-    	let date: IDate = new Date();
-    	let expirationTime = parseInt(this.props.conf.cookieValidInDays);
-    	date.setTime(date.getTime() + (expirationTime * 24 * 60 * 60 * 1000));
-
-    	document.cookie = `chatwasopened=1; expires=${date.toUTCString()}; path=/`;
-    }
-
-    getCookie() {
-    	let nameEQ = 'chatwasopened=';
-    	let ca = document.cookie.split(';');
-    	for (let i = 0; i < ca.length; i++) {
-    		let c = ca[i];
-    		while (c.charAt(0) === ' ') c = c.substring(1, c.length);
-    		if (c.indexOf(nameEQ) === 0) return c.substring(nameEQ.length, c.length);
-    	}
-    	return false;
-    }
-
     wasChatOpened() {
-    	return (this.getCookie() !== false);
+    	return (getCookie('chatwasopened') !== false);
     }
 
 }
@@ -158,9 +140,4 @@ interface IWidgetProps {
 
 declare global {
     interface Window { attachEvent: Function, botmanChatWidget: Api }
-}
-
-// FIXME: toGMTString is deprecated
-interface IDate extends Date {
-  toUTCString(): string;
 }
