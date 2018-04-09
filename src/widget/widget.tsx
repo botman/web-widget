@@ -100,7 +100,9 @@ export default class Widget extends Component<any, IWidgetState> {
     	};
     	if (!this.state.isChatOpen && !this.state.wasChatOpened) {
     	    if (this.props.conf.sendWidgetOpenedEvent) {
-    	        this.sendOpenEvent();
+    	        setTimeout(() => {
+    	            this.sendOpenEvent();
+                }, 500);
             }
     		stateData.wasChatOpened = true;
     	}
