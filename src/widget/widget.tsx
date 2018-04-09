@@ -131,7 +131,7 @@ export default class Widget extends Component<any, IWidgetState> {
             const messages = response.data.messages || [];
 
             messages.forEach((message : IMessage) => {
-                window.botmanChatWidget.sayAsBot(message.text);
+                window.botmanChatWidget.writeToMessages(message);
             });
         });
     }

@@ -1,4 +1,5 @@
 import Widget from './widget';
+import {IMessage} from "../typings";
 
 export default class Api {
 
@@ -37,6 +38,15 @@ export default class Api {
                 console.error(e);
             }
         }
+    }
+
+    writeToMessages(message: IMessage) {
+        this.callChatWidget({
+            method: 'writeToMessages',
+            params: [
+                message
+            ]
+        })
     }
 
     sayAsBot(text: string) {
