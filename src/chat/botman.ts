@@ -21,7 +21,7 @@ class BotMan {
     		userId: this.userId,
     		message: text,
     		attachment: attachment as Blob,
-    		interactive: interactive ? '0' : '1'
+    		interactive: interactive ? '1' : '0'
     	};
 
     	Object.keys(postData).forEach(key => data.append(key, postData[key]));
