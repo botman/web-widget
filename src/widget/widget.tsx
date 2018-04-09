@@ -128,7 +128,7 @@ export default class Widget extends Component<any, IWidgetState> {
         let data = new FormData();
         data.append('driver', 'web');
         data.append('eventName', 'widgetOpened');
-        data.append('eventData', '');
+        data.append('eventData', this.props.conf.widgetOpenedEventData);
 
         axios.post(this.props.conf.chatServer, data).then(response => {
             const messages = response.data.messages || [];

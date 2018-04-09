@@ -105,6 +105,7 @@ export interface IConfiguration {
      * Send a widget opened event
      */
     sendWidgetOpenedEvent: boolean,
+    widgetOpenedEventData: string,
     mainColor: string,
     headerTextColor: string,
     bubbleBackground: string,
