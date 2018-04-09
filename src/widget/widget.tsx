@@ -12,7 +12,7 @@ import {
     mobileClosedWrapperStyle,
     desktopClosedWrapperStyleChat
 } from './style';
-import { IConfiguration } from '../typings';
+import {IConfiguration, IMessage} from '../typings';
 
 export default class Widget extends Component<any, IWidgetState> {
 
@@ -99,7 +99,9 @@ export default class Widget extends Component<any, IWidgetState> {
             wasChatOpened: this.state.wasChatOpened
     	};
     	if (!this.state.isChatOpen && !this.state.wasChatOpened) {
-    		this.sendOpenEvent();
+    	    if (this.props.conf.sendWidgetOpenedEvent) {
+    	        this.sendOpenEvent();
+            }
     		stateData.wasChatOpened = true;
     	}
     	this.setState(stateData);
@@ -120,10 +122,17 @@ export default class Widget extends Component<any, IWidgetState> {
     }
 
     private sendOpenEvent() {
-        axios.post(this.props.conf.chatServer, {
-            driver: 'web',
-            eventName: 'widgetOpened',
-            eventData: '',
+        let data = new FormData();
+        data.append('driver', 'web');
+        data.append('eventName', 'widgetOpened');
+        data.append('eventData', '');
+
+        axios.post(this.props.conf.chatServer, data).then(response => {
+            const messages = response.data.messages || [];
+
+            messages.forEach((message : IMessage) => {
+                window.botmanChatWidget.sayAsBot(message.text);
+            });
         });
     }
 }

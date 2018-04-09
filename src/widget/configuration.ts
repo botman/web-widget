@@ -10,6 +10,7 @@ export const defaultConfiguration: IConfiguration = {
     introMessage: '',
     placeholderText: 'Send a message...',
     displayMessageTime: true,
+    sendWidgetOpenedEvent: false,
     mainColor: '#408591',
     headerTextColor: '#333',
     bubbleBackground: '#408591',

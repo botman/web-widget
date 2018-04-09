@@ -101,6 +101,10 @@ export interface IConfiguration {
      * Toggle display of message times
      */
     displayMessageTime: boolean,
+    /*
+     * Send a widget opened event
+     */
+    sendWidgetOpenedEvent: boolean,
     mainColor: string,
     headerTextColor: string,
     bubbleBackground: string,
