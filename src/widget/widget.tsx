@@ -1,3 +1,4 @@
+import axios from 'axios';
 import {h, Component} from 'preact';
 import ChatFrame from './chat-frame';
 import ChatFloatingButton from './chat-floating-button';
@@ -21,7 +22,7 @@ export default class Widget extends Component<any, IWidgetState> {
         super();
         this.state.isChatOpen = false;
         this.state.pristine = true;
-        this.state.wasChatOpened = this.wasChatOpened();
+        this.state.wasChatOpened = false;
     }
 
     componentDidMount() {
@@ -41,7 +42,7 @@ export default class Widget extends Component<any, IWidgetState> {
         if (!isChatOpen && (isMobile || conf.alwaysUseFloatingButton)) {
             wrapperStyle = { ...mobileClosedWrapperStyle}; // closed mobile floating button
         } else if (!isMobile){
-            wrapperStyle = (isChatOpen || this.wasChatOpened()) ?
+            wrapperStyle = (isChatOpen || this.state.wasChatOpened) ?
                 (isChatOpen) ?
                     { ...desktopWrapperStyle, ...wrapperWidth} // desktop mode, button style
                     :
@@ -64,7 +65,7 @@ export default class Widget extends Component<any, IWidgetState> {
 
                     :
 
-                    (isChatOpen || this.wasChatOpened()) ?
+                    (isChatOpen || this.state.wasChatOpened) ?
                         (isChatOpen ?
                             <div style={{background: conf.mainColor, ...desktopTitleStyle}} onClick={this.toggle}>
                                 <div style={{
@@ -95,10 +96,10 @@ export default class Widget extends Component<any, IWidgetState> {
     	let stateData = {
     		pristine: false,
             isChatOpen: !this.state.isChatOpen,
-            wasChatOpened: false,
+            wasChatOpened: this.state.wasChatOpened
     	};
-    	if (!this.state.isChatOpen && !this.wasChatOpened()) {
-    		this.setCookie();
+    	if (!this.state.isChatOpen && !this.state.wasChatOpened) {
+    		this.sendOpenEvent();
     		stateData.wasChatOpened = true;
     	}
     	this.setState(stateData);
@@ -118,29 +119,13 @@ export default class Widget extends Component<any, IWidgetState> {
         });
     }
 
-    setCookie() {
-    	let date: IDate = new Date();
-    	let expirationTime = parseInt(this.props.conf.cookieValidInDays);
-    	date.setTime(date.getTime() + (expirationTime * 24 * 60 * 60 * 1000));
-
-    	document.cookie = `chatwasopened=1; expires=${date.toUTCString()}; path=/`;
+    private sendOpenEvent() {
+        axios.post(this.props.conf.chatServer, {
+            driver: 'web',
+            eventName: 'widgetOpened',
+            eventData: '',
+        });
     }
-
-    getCookie() {
-    	let nameEQ = 'chatwasopened=';
-    	let ca = document.cookie.split(';');
-    	for (let i = 0; i < ca.length; i++) {
-    		let c = ca[i];
-    		while (c.charAt(0) === ' ') c = c.substring(1, c.length);
-    		if (c.indexOf(nameEQ) === 0) return c.substring(nameEQ.length, c.length);
-    	}
-    	return false;
-    }
-
-    wasChatOpened() {
-    	return (this.getCookie() !== false);
-    }
-
 }
 
 interface IWidgetState {
