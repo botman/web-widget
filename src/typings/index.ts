@@ -102,6 +102,7 @@ export interface IConfiguration {
      */
     displayMessageTime: boolean,
     mainColor: string,
+    headerTextColor: string,
     bubbleBackground: string,
     bubbleAvatarUrl: string,
     desktopHeight: number,
