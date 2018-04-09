@@ -112,7 +112,8 @@ export default class Widget extends Component<any, IWidgetState> {
     open() {
         this.setState({
             pristine: false,
-            isChatOpen: true
+            isChatOpen: true,
+            wasChatOpened: true
         });
     }
 
