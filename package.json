@@ -1,6 +1,6 @@
 {
   "name": "botman-web-widget",
-  "version": "0.0.19",
+  "version": "0.0.20",
   "description": "BotMan web widget to use with the web driver.",
   "scripts": {
     "dev": "cross-env NODE_ENV=development webpack-dev-server --inline --hot --progress",
