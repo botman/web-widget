@@ -35,7 +35,7 @@ export interface IMessage {
     buttons?: IButton[],
     attachment?: IAttachment,
     globalButtons?: IButton[],
-    additionalParameters?: String[],
+    additionalParameters?: any,
     elements?: IElement[],
 }
 
