@@ -8,7 +8,7 @@ if (window.attachEvent) {
     window.addEventListener('load', injectChat, false);
 }
 
-let conf = {};
+let conf = {} as IConfiguration;
 
 const confString = getUrlParameter('conf');
 if (confString) {
@@ -26,8 +26,8 @@ function injectChat() {
 
     render(
         <Chat
-            userId={getUserId()}
-            conf={conf as IConfiguration}
+            userId={conf.userId}
+            conf={conf}
         />,
         root
     );
@@ -38,12 +38,4 @@ function getUrlParameter(name: string) {
     let regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
     let results = regex.exec(location.search);
     return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
-}
-
-function getUserId() {
-    return (conf as IConfiguration).userId || generateRandomId();
-}
-
-function generateRandomId() {
-    return Math.random().toString(36).substr(2, 6);
 }

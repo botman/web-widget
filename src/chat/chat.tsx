@@ -1,7 +1,7 @@
 import { h, Component } from "preact";
 import MessageArea from "./message-area";
 import { botman } from "./botman";
-import { IMessage, IConfiguration } from "../typings";
+import {IMessage, IConfiguration} from "../typings";
 
 export default class Chat extends Component<IChatProps, IChatState> {
 

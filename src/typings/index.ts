@@ -124,5 +124,13 @@ export interface IConfiguration {
 
     useEcho: boolean,
 
-    echoConfiguration: any
+    echoChannel: string | any,
+
+    echoChannelType: string,
+
+    echoConfiguration: any,
+
+    echoEventName: string,
+
+    init?: Function
 }

@@ -13,8 +13,11 @@ import {
     desktopClosedWrapperStyleChat
 } from './style';
 import {IConfiguration, IMessage} from '../typings';
+import Echo from "laravel-echo";
 
 export default class Widget extends Component<any, IWidgetState> {
+
+    Echo: Echo;
 
     state: IWidgetState;
 
@@ -27,6 +30,30 @@ export default class Widget extends Component<any, IWidgetState> {
 
     componentDidMount() {
         window.botmanChatWidget = new Api(this);
+
+        this.setupEcho();
+
+        if (typeof this.props.conf.init === 'function') {
+            this.props.conf.init(window.botmanChatWidget);
+        }
+    }
+
+    private setupEcho() {
+        if (this.props.conf.useEcho === true) {
+
+            this.Echo = new Echo(this.props.conf.echoConfiguration);
+            // Join channel
+            let channel;
+            if (this.props.conf.echoChannelType === 'private') {
+                channel = this.Echo.private(this.props.conf.echoChannel);
+            } else {
+                channel = this.Echo.channel(this.props.conf.echoChannel);
+            }
+
+            channel.listen(this.props.conf.echoEventName, (message: IMessage) => {
+                window.botmanChatWidget.writeToMessages(message);
+            });
+        }
     }
 
     render(props: IWidgetProps, state: IWidgetState) {
