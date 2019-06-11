@@ -4,6 +4,18 @@ const autoprefixer = require('autoprefixer');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const path = require('path');
 const ENV = process.env.NODE_ENV || 'development';
+const EXPORT_BUILD_PATH = process.env.EXPORT_BUILD_PATH;
+const DEFAULT_COPY_ELEMENTS = [
+    { from: './chat.html', to: './../' },
+    { from: './demo.html', to: './../' },
+];
+
+if (EXPORT_BUILD_PATH) {
+    DEFAULT_COPY_ELEMENTS.push({
+        from: './../build',
+        to: EXPORT_BUILD_PATH,
+    });
+}
 
 const CSS_MAPS = ENV!=='production';
 
@@ -117,10 +129,7 @@ module.exports = {
 		new webpack.DefinePlugin({
 			'process.env.NODE_ENV': JSON.stringify(ENV)
 		}),
-        new CopyWebpackPlugin([
-            { from: './chat.html', to: './../' },
-            { from: './demo.html', to: './../' }
-        ])
+        new CopyWebpackPlugin(DEFAULT_COPY_ELEMENTS)
 	]).concat(ENV==='production' ? [
 		new webpack.optimize.UglifyJsPlugin({
 			output: {
