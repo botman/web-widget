@@ -5,11 +5,11 @@ export default abstract class MessageType extends Component<IMessageTypeProps, I
 
     constructor() {
         super();
-        this.state = {
+        this.setState({
             visible: false,
             visibilityChanged: false,
             attachmentsVisible: true
-        };
+        });
     }
 
     onVisibilityChange = () => {};
@@ -19,8 +19,10 @@ export default abstract class MessageType extends Component<IMessageTypeProps, I
      */
     componentDidMount() {
         setTimeout(() => {
-            this.state.visible = true;
-            this.state.visibilityChanged = true;
+            this.setState({
+                visible: true,
+                visibilityChanged: true
+            });
             this.onVisibilityChange();
             this.props.onVisibilityChange(this.props.message, this.state);
         }, this.props.timeout || 0);
