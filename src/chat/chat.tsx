@@ -1,7 +1,7 @@
 import { h, Component } from "preact";
 import MessageArea from "./message-area";
 import { botman } from "./botman";
-import {IMessage, IConfiguration} from "../typings";
+import {IMessage, IConfiguration, IApiMessage} from "../typings";
 
 export default class Chat extends Component<IChatProps, IChatState> {
 
@@ -9,13 +9,14 @@ export default class Chat extends Component<IChatProps, IChatState> {
     botman: any;
     input: HTMLInputElement;
     textarea: HTMLInputElement;
+    messagesListener: number;
 
     constructor(props: IChatProps) {
         super(props);
 
         this.botman = botman;
         this.botman.setUserId(this.props.userId);
-        this.botman.setChatServer(this.props.conf.chatServer);
+        this.botman.setChatServer(this.props.conf.chatServer, this.props.conf.messagesServer);
         this.setState({ messages : [] });
         this.setState({ replyType : ReplyType.Text });
     }
@@ -28,6 +29,7 @@ export default class Chat extends Component<IChatProps, IChatState> {
                 from: "chatbot"
             });
         }
+
         // Add event listener for widget API
         window.addEventListener("message", (event: MessageEvent) => {
             try {
@@ -35,6 +37,29 @@ export default class Chat extends Component<IChatProps, IChatState> {
             } catch (e) {
                 //
             }
+        });
+    }
+
+    componentWillUnmount(): void {
+        window.clearInterval(this.messagesListener);
+    }
+
+    getNextMessages() {
+        this.botman.getNextMessages(this.state.since, (messages: IApiMessage[]) => {
+            if (messages.length === 0) {
+                return;
+            }
+
+            const timestamps = messages.map(({ created_at }) => created_at);
+            const currentSince = Math.max(...timestamps);
+
+            this.setState({
+                since: currentSince
+            });
+
+            messages.forEach(message => {
+               this.sayAsBot(message.content);
+            });
         });
     }
 
@@ -195,6 +220,19 @@ export default class Chat extends Component<IChatProps, IChatState> {
 	        msg.attachment = {}; // TODO: This renders IAttachment useless
 	    }
 
+	    if (this.state.messages.length === 0 && !this.messagesListener) {
+	        const unixTimestamp = String(Date.now()).substring(0, 9);
+
+	        this.setState({
+                since: unixTimestamp,
+            });
+
+            this.messagesListener = window.setInterval(
+                () => this.getNextMessages(),
+                5000,
+            );
+        }
+
 	    this.state.messages.push(msg);
 	    this.setState({
 	        messages: this.state.messages
@@ -221,6 +259,6 @@ enum ReplyType {
 
 interface IChatState {
     messages: IMessage[],
-
+    since: number | string;
     replyType: string,
 }

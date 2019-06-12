@@ -5,13 +5,15 @@ class BotMan {
 
 	userId: string;
 	chatServer: string;
+	messagesServer: string;
 
     setUserId(userId: string) {
         this.userId = userId;
     }
 
-    setChatServer(chatServer: string) {
+    setChatServer(chatServer: string, messagesServer: string) {
         this.chatServer = chatServer;
+        this.messagesServer = messagesServer;
     }
 
     callAPI = (text: string, interactive = false, attachment: IAttachment = null, perMessageCallback: Function, callback: Function) => {
@@ -40,6 +42,18 @@ class BotMan {
     		}
     	});
     };
+
+    getNextMessages = (since: number, callback: Function) => {
+        let url: string = `${this.messagesServer}&user_id=${this.userId}`;
+
+        if (since) {
+            url += `&since=${since}`;
+        }
+
+        axios.get(url).then(response => {
+            callback(response.data);
+        });
+    }
 
 }
 
