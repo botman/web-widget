@@ -19,9 +19,13 @@ export default class ListType extends MessageType {
     render(props: IMessageTypeProps) {
         const message = props.message;
 
-        const globalButtons = message.globalButtons.map((button: IButton) => {
-            return this.getButton(button);
-        });
+        let globalButtons: any[];
+
+        if (typeof message.globalButtons !== 'undefined') {
+            globalButtons = message.globalButtons.map((button: IButton) => {
+                return this.getButton(button);
+            });
+        }
 
         const lists = message.elements.map((element) => {
             const elementButtons = element.buttons.map((button: IButton) => {
