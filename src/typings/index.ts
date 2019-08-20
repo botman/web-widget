@@ -134,3 +134,7 @@ export interface IConfiguration {
 
     init?: Function
 }
+
+export interface IExtra { 
+    [index: string] : string 
+}

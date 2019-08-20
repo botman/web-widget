@@ -1,10 +1,15 @@
 import axios from 'axios';
-import { IAttachment, IMessage } from './../typings';
+import { IAttachment, IMessage, IExtra } from './../typings';
 
 class BotMan {
 
+	extra: IExtra;
 	userId: string;
 	chatServer: string;
+	
+	setExtra(params: IExtra) {
+		this.extra = params;
+	}
 
     setUserId(userId: string) {
         this.userId = userId;
@@ -22,8 +27,13 @@ class BotMan {
     		message: text,
     		attachment: attachment as Blob,
     		interactive: interactive ? '1' : '0'
-    	};
+		};
+		
+		if (this.extra) {
 
+			Object.keys(this.extra).forEach(key => data.append(key, this.extra[key]));
+		}
+	
     	Object.keys(postData).forEach(key => data.append(key, postData[key]));
 
     	axios.post(this.chatServer, data).then(response => {
