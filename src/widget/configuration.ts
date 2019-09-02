@@ -12,6 +12,7 @@ export const defaultConfiguration: IConfiguration = {
     displayMessageTime: true,
     sendWidgetOpenedEvent: false,
     widgetOpenedEventData: '',
+    oneTimeButtons: true,
     mainColor: '#408591',
     headerTextColor: '#333',
     bubbleBackground: '#408591',

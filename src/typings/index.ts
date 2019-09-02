@@ -1,5 +1,3 @@
-
-
 export interface IMessageTypeProps {
     message: IMessage,
     calculatedTimeout?: number,
@@ -45,7 +43,7 @@ export interface IAttachment {
 }
 
 export interface IElement {
-    title : string,
+    title: string,
     image_url: string,
     item_url: string,
     subtitle: string,
@@ -106,6 +104,10 @@ export interface IConfiguration {
      */
     sendWidgetOpenedEvent: boolean,
     widgetOpenedEventData: string,
+    /*
+     * Hide buttons after action fired
+     */
+    oneTimeButtons: boolean,
     mainColor: string,
     headerTextColor: string,
     bubbleBackground: string,
