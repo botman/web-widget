@@ -15,7 +15,7 @@ export const desktopClosedWrapperStyleChat = {
     bottom: '0px',
     right: '0px',
     zIndex: 2147483647,
-    minWidth: '400px',
+    minWidth: '100px',
     boxSizing: 'content-box',
     overflow: 'hidden',
     minHeight: '120px'
@@ -26,7 +26,7 @@ export const mobileClosedWrapperStyle = {
     bottom: '0px',
     right: '0px',
     zIndex: 2147483647,
-    minWidth: '400px',
+    minWidth: '100px',
     boxSizing: 'content-box',
     overflow: 'hidden',
     minHeight: '120px'
