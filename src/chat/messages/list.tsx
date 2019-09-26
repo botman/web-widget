@@ -32,10 +32,10 @@ export default class ListType extends MessageType {
                 return this.getButton(button);
             });
 
-            return <div style={{minWidth: '200px'}}>
-                <img src={element.image_url} />
-                <p>{element.title}</p>
-                <p>{element.subtitle}</p>
+            return <div style={{minWidth: '200px', paddingRight: '10px'}}>
+                <img src={element.image_url} width={200} />
+                <p style={{fontWeight: 'bold', padding: '5px'}}>{element.title}</p>
+                <p style={{padding: '5px'}}>{element.subtitle}</p>
                 {elementButtons}
             </div>;
         });
