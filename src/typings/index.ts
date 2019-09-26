@@ -66,6 +66,10 @@ export interface IAction {
     value: string,
 }
 
+export interface IExternalConfigUrl {
+    config: string,
+}
+
 export interface IConfiguration {
     /**
      * The URL of the BotMan route / server to use.
