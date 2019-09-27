@@ -9,9 +9,12 @@ export default class Action extends MessageType {
         const message = props.message;
 
         const buttons = message.actions.map((action: IAction) => {
-            return <div class="btn" onClick={() => this.performAction(action)}>
-                {action.text}
-            </div>;
+            if (action.text){
+                return <div class="btn" onClick={() => this.performAction(action)}>
+                    {action.text}
+                </div>;
+            }
+
         });
 
         return (
