@@ -36,6 +36,7 @@ export default class Action extends MessageType {
                 timeout: msg.timeout,
                 actions: msg.actions,
                 attachment: msg.attachment,
+                elements: msg.elements,
                 additionalParameters: msg.additionalParameters,
                 from: 'chatbot'
             });

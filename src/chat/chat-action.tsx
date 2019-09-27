@@ -20,6 +20,7 @@ export default class ChatAction extends Component<IChatActionProps, any> {
                 type: msg.type,
                 actions: msg.actions,
                 attachment: msg.attachment,
+                elements: msg.elements,
                 additionalParameters: msg.additionalParameters,
                 from: 'chatbot'
             });
