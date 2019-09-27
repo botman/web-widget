@@ -8,16 +8,20 @@ export default class ButtonsType extends MessageType {
     render(props: IMessageTypeProps) {
         const message = props.message;
 
-        const buttons = message.buttons.map((button) => {
-            if (button.type === 'postback') {
-                return <div class="btn" onClick={() => this.performAction(button)}>
-                    {button.title}
-                </div>;
-            }
-            if (button.type === 'web_url') {
-                return <a class="btn" href={button.url} target="_blank">{button.title}</a>;
-            }
-        });
+        let buttons: any[];
+
+        if (typeof message.buttons !== 'undefined') {
+            buttons = message.buttons.map((button) => {
+                if (button.type === 'postback') {
+                    return <div class="btn" onClick={() => this.performAction(button)}>
+                        {button.title}
+                    </div>;
+                }
+                if (button.type === 'web_url') {
+                    return <a class="btn" href={button.url} target="_blank">{button.title}</a>;
+                }
+            });
+        }
         return (
             <div>
                 {message.text}
