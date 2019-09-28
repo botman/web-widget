@@ -58,6 +58,7 @@ export default class ListType extends MessageType {
                 actions: msg.actions,
                 attachment: msg.attachment,
                 elements: msg.elements,
+                buttons: msg.buttons,
                 additionalParameters: msg.additionalParameters,
                 from: 'chatbot'
             });
