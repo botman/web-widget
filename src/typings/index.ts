@@ -67,7 +67,7 @@ export interface IAction {
 }
 
 export interface IExternalConfigUrl {
-    config: string,
+    init: string,
 }
 
 export interface IConfiguration {

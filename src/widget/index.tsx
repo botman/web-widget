@@ -37,7 +37,7 @@ async function injectChat() {
     } catch (e) { }
 
     const extConfUrl = window.involvedBot;
-    const extConf = await Axios( extConfUrl.config );
+    const extConf = await Axios( extConfUrl.init );
     const dynamicConf = extConf.data || {} as IConfiguration; // these configuration are loaded when the chat frame is opened
 
     dynamicConf.userId = getUserId({...defaultConfiguration, ...dynamicConf});
