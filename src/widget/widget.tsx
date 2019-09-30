@@ -99,7 +99,7 @@ export default class Widget extends Component<any, IWidgetState> {
                                     display: 'flex', alignItems: 'center', padding: '0px 30px 0px 0px',
                                     fontSize: '15px', fontWeight: 'normal', color: conf.headerTextColor
                                 }}>
-                                    <div onClick={this.showMenu} style={{marginRight: '10px'}}>
+                                    <div onClick={this.showMenu} style={{margin: '10px 10px 0 0'}}>
                                         <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="bars" class=""
                                              role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" height="20" width="20">
                                             <path fill="currentColor"
