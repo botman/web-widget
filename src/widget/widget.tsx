@@ -67,15 +67,15 @@ export default class Widget extends Component<any, IWidgetState> {
         let wrapperStyle;
 
         if (!isChatOpen && (isMobile || conf.alwaysUseFloatingButton)) {
-            wrapperStyle = { ...mobileClosedWrapperStyle}; // closed mobile floating button
-        } else if (!isMobile){
+            wrapperStyle = {...mobileClosedWrapperStyle}; // closed mobile floating button
+        } else if (!isMobile) {
             wrapperStyle = (isChatOpen || this.state.wasChatOpened) ?
                 (isChatOpen) ?
-                    { ...desktopWrapperStyle, ...wrapperWidth} // desktop mode, button style
+                    {...desktopWrapperStyle, ...wrapperWidth} // desktop mode, button style
                     :
-                    { ...desktopClosedWrapperStyleChat}
+                    {...desktopClosedWrapperStyleChat}
                 :
-                { ...desktopClosedWrapperStyleChat}; // desktop mode, chat style
+                {...desktopClosedWrapperStyleChat}; // desktop mode, chat style
         } else {
             wrapperStyle = mobileOpenWrapperStyle; // open mobile wrapper should have no border
         }
@@ -99,9 +99,11 @@ export default class Widget extends Component<any, IWidgetState> {
                                     display: 'flex', alignItems: 'center', padding: '0px 30px 0px 0px',
                                     fontSize: '15px', fontWeight: 'normal', color: conf.headerTextColor
                                 }}>
-                                    <div onClick={this.showMenu} style={{margin: '10px 10px 0 0'}}>
-                                        <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="bars" class=""
-                                             role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" height="20" width="20">
+                                    <div onClick={this.showMenu} style={{marginRight: '10px'}}>
+                                        <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="bars"
+                                             class=""
+                                             role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"
+                                             height="20" width="20">
                                             <path fill="currentColor"
                                                   d="M16 132h416c8.837 0 16-7.163 16-16V76c0-8.837-7.163-16-16-16H16C7.163 60 0 67.163 0 76v40c0 8.837 7.163 16 16 16zm0 160h416c8.837 0 16-7.163 16-16v-40c0-8.837-7.163-16-16-16H16c-8.837 0-16 7.163-16 16v40c0 8.837 7.163 16 16 16zm0 160h416c8.837 0 16-7.163 16-16v-40c0-8.837-7.163-16-16-16H16c-8.837 0-16 7.163-16 16v40c0 8.837 7.163 16 16 16z"></path>
                                         </svg>
@@ -129,20 +131,22 @@ export default class Widget extends Component<any, IWidgetState> {
     }
 
     toggle = () => {
-    	let stateData = {
-    		pristine: false,
+        let stateData = {
+            pristine: false,
             isChatOpen: !this.state.isChatOpen,
             wasChatOpened: this.state.wasChatOpened
-    	};
-    	if (!this.state.isChatOpen && !this.state.wasChatOpened) {
-    	    if (this.props.conf.sendWidgetOpenedEvent) {
-    	        setTimeout(() => {
-    	            this.sendOpenEvent();
+        };
+        if (!this.state.isChatOpen && !this.state.wasChatOpened) {
+            window.botmanChatWidget.whisper('GET_STARTED');
+            if (this.props.conf.sendWidgetOpenedEvent) {
+                setTimeout(() => {
+                    this.sendOpenEvent();
                 }, 500);
             }
-    		stateData.wasChatOpened = true;
-    	}
-    	this.setState(stateData);
+            stateData.wasChatOpened = true;
+        }
+
+        this.setState(stateData);
     };
 
     open() {
@@ -169,7 +173,7 @@ export default class Widget extends Component<any, IWidgetState> {
         axios.post(this.props.conf.chatServer, data).then(response => {
             const messages = response.data.messages || [];
 
-            messages.forEach((message : IMessage) => {
+            messages.forEach((message: IMessage) => {
                 window.botmanChatWidget.writeToMessages(message);
             });
         });
@@ -194,10 +198,13 @@ interface IWidgetProps {
 }
 
 declare global {
-    interface Window { attachEvent: Function, botmanChatWidget: Api }
+    interface Window {
+        attachEvent: Function,
+        botmanChatWidget: Api
+    }
 }
 
 // FIXME: toGMTString is deprecated
 interface IDate extends Date {
-  toUTCString(): string;
+    toUTCString(): string;
 }
