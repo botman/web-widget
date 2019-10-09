@@ -7,7 +7,7 @@ export default class TextType extends MessageType {
         const message = props.message;
         const attachment = message.attachment;
 
-        const textObject = { __html: message.text };
+        const textObject = { __html: message.text.replace(/(?:\r\n|\r|\n)/g, '<br>') };
 
         return (
             <div>
