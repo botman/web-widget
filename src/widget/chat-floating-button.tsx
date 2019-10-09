@@ -27,6 +27,7 @@ export default class ChatFloatingButton extends Component<IChatFloatingButtonPro
                             <img
                                 src={conf.bubbleAvatarUrl}
                                 style={{...closedChatAvatarImageStyle}}
+                                alt="chat-bubble-avatar"
                             />: <div style={{ display: 'flex', alignItems: 'center' }}><br/>{conf.bubbleAvatarUrl}</div>)
                     }
                 </div>
