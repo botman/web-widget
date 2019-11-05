@@ -1,5 +1,5 @@
 import Widget from './widget';
-import {IMessage} from "../typings";
+import {IMessage, IExtra} from "../typings";
 
 export default class Api {
 
@@ -76,4 +76,20 @@ export default class Api {
         });
     }
 
+    setExtra(extra: IExtra) {
+
+        const wasClosed = !this.isOpen();
+
+        this.callChatWidget({
+            method: 'setExtra',
+            params: [
+                extra
+            ]
+        });
+
+        if (wasClosed) {
+
+            this.close();
+        }
+    }
 }

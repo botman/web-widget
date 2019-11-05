@@ -68,6 +68,10 @@ export interface IAction {
 
 export interface IConfiguration {
     /**
+     * Automatically initialize the chat widget.
+     */
+    autoInit: boolean,
+    /**
      * The URL of the BotMan route / server to use.
      */
     chatServer: string,
@@ -133,4 +137,8 @@ export interface IConfiguration {
     echoEventName: string,
 
     init?: Function
+}
+
+export interface IExtra { 
+    [index: string] : string 
 }
