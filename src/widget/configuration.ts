@@ -1,6 +1,7 @@
 import { IConfiguration } from "../typings";
 
 export const defaultConfiguration: IConfiguration = {
+    autoInit: true,
     chatServer: '/botman',
     frameEndpoint: '/botman/chat',
     timeFormat: 'HH:MM',

@@ -4,9 +4,9 @@ import {defaultConfiguration} from './configuration';
 import {IConfiguration} from "../typings";
 
 if (window.attachEvent) {
-    window.attachEvent('onload', injectChat);
+    window.attachEvent('onload', initialize);
 } else {
-    window.addEventListener('load', injectChat, false);
+    window.addEventListener('load', initialize, false);
 }
 
 function getUrlParameter(name: string, defaults = '') {
@@ -20,14 +20,7 @@ function getUserId(conf: IConfiguration) {
     return conf.userId || generateRandomId();
 }
 
-function generateRandomId() {
-    return Math.random().toString(36).substr(2, 6);
-}
-
-function injectChat() {
-    let root = document.createElement('div');
-    root.id = 'botmanWidgetRoot';
-    document.getElementsByTagName('body')[0].appendChild(root);
+function getConfig () :IConfiguration {
 
     let settings = {};
     try {
@@ -42,7 +35,30 @@ function injectChat() {
         dynamicConf.echoChannel = dynamicConf.echoChannel(dynamicConf.userId);
     }
 
-    const conf = {...defaultConfiguration, ...settings, ...dynamicConf};
+    return {...defaultConfiguration, ...settings, ...dynamicConf};
+}
+
+function generateRandomId() {
+    return Math.random().toString(36).substr(2, 6);
+}
+
+function initialize () {
+
+    const conf = getConfig();
+
+    if (conf.autoInit) {
+        injectChat();
+    } else {
+        window.botmanInit = injectChat;
+    }
+}
+
+function injectChat() {
+    let root = document.createElement('div');
+    root.id = 'botmanWidgetRoot';
+    document.getElementsByTagName('body')[0].appendChild(root);
+
+    const conf = getConfig();
 
     const iFrameSrc = conf.frameEndpoint;
 
@@ -55,8 +71,9 @@ function injectChat() {
         root
     );
 
+    delete window.botmanInit;
 }
 
 declare global {
-    interface Window { attachEvent: Function, botmanWidget: IConfiguration }
+    interface Window { attachEvent: Function, botmanWidget: IConfiguration, botmanInit: Function }
 }
