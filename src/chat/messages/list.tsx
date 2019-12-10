@@ -32,10 +32,13 @@ export default class ListType extends MessageType {
                 return this.getButton(button);
             });
 
+            const title = { __html: element.title.replace(/(?:\r\n|\r|\n)/g, '<br>')};
+            const subtitle = { __html: element.subtitle.replace(/(?:\r\n|\r|\n)/g, '<br>')};
+
             return <div style={{minWidth: '200px', paddingRight: '10px'}}>
                 <img src={element.image_url} width={200} />
-                <p style={{fontWeight: 'bold', padding: '5px'}}>{element.title}</p>
-                <p style={{padding: '5px'}}>{element.subtitle}</p>
+                <p style={{fontWeight: 'bold', padding: '5px'}} dangerouslySetInnerHTML={title} />
+                <p style={{padding: '5px'}} dangerouslySetInnerHTML={subtitle} />
                 {elementButtons}
             </div>;
         });
