@@ -1,11 +1,11 @@
 import { IConfiguration } from "../typings";
 
 export const defaultConfiguration: IConfiguration = {
-    chatServer: '/botman',
-    frameEndpoint: '/botman/chat',
+    chatServer: '/bot/incoming',
+    frameEndpoint: '/bot/chat',
     timeFormat: 'HH:MM',
     dateTimeFormat: 'm/d/yy HH:MM',
-    title: 'Experian Help',
+    title: 'No config loaded!',
     cookieValidInDays: 1,
     introMessage: '',
     placeholderText: 'Send a message...',
@@ -21,8 +21,8 @@ export const defaultConfiguration: IConfiguration = {
     mobileHeight: '100%',
     mobileWidth: '300px',
     videoHeight: 160,
-    aboutLink: 'https://botman.io',
-    aboutText: '⚡ Powered by Botman',
+    aboutLink: 'https://involved.group',
+    aboutText: '⚡ Powered by InvolvedConnect',
     chatId: '',
     userId: '',
     alwaysUseFloatingButton: false,

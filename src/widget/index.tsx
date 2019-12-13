@@ -2,6 +2,8 @@ import {h, render} from 'preact';
 import Widget from './widget';
 import {defaultConfiguration} from './configuration';
 import {IConfiguration} from "../typings";
+import {IExternalConfigUrl} from "../typings";
+import Axios from "axios";
 
 if (window.attachEvent) {
     window.attachEvent('onload', injectChat);
@@ -24,7 +26,7 @@ function generateRandomId() {
     return Math.random().toString(36).substr(2, 6);
 }
 
-function injectChat() {
+async function injectChat() {
     let root = document.createElement('div');
     root.id = 'botmanWidgetRoot';
     document.getElementsByTagName('body')[0].appendChild(root);
@@ -34,7 +36,9 @@ function injectChat() {
         settings = JSON.parse(getUrlParameter('settings', '{}'));
     } catch (e) { }
 
-    const dynamicConf = window.botmanWidget || {} as IConfiguration; // these configuration are loaded when the chat frame is opened
+    const extConfUrl = window.involvedBot;
+    const extConf = await Axios( extConfUrl.init );
+    const dynamicConf = extConf.data || {} as IConfiguration; // these configuration are loaded when the chat frame is opened
 
     dynamicConf.userId = getUserId({...defaultConfiguration, ...dynamicConf});
 
@@ -58,5 +62,5 @@ function injectChat() {
 }
 
 declare global {
-    interface Window { attachEvent: Function, botmanWidget: IConfiguration }
+    interface Window { attachEvent: Function, botmanWidget: IConfiguration, involvedBot: IExternalConfigUrl }
 }

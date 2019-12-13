@@ -19,19 +19,26 @@ export default class ListType extends MessageType {
     render(props: IMessageTypeProps) {
         const message = props.message;
 
-        const globalButtons = message.globalButtons.map((button: IButton) => {
-            return this.getButton(button);
-        });
+        let globalButtons: any[];
+
+        if (typeof message.globalButtons !== 'undefined') {
+            globalButtons = message.globalButtons.map((button: IButton) => {
+                return this.getButton(button);
+            });
+        }
 
         const lists = message.elements.map((element) => {
             const elementButtons = element.buttons.map((button: IButton) => {
                 return this.getButton(button);
             });
 
-            return <div style={{minWidth: '200px'}}>
-                <img src={element.image_url} />
-                <p>{element.title}</p>
-                <p>{element.subtitle}</p>
+            const title = { __html: element.title.replace(/(?:\r\n|\r|\n)/g, '<br>')};
+            const subtitle = { __html: element.subtitle.replace(/(?:\r\n|\r|\n)/g, '<br>')};
+
+            return <div style={{minWidth: '200px', paddingRight: '10px'}}>
+                <img src={element.image_url} width={200} />
+                <p style={{fontWeight: 'bold', padding: '5px'}} dangerouslySetInnerHTML={title} />
+                <p style={{padding: '5px'}} dangerouslySetInnerHTML={subtitle} />
                 {elementButtons}
             </div>;
         });
@@ -53,6 +60,8 @@ export default class ListType extends MessageType {
                 type: msg.type,
                 actions: msg.actions,
                 attachment: msg.attachment,
+                elements: msg.elements,
+                buttons: msg.buttons,
                 additionalParameters: msg.additionalParameters,
                 from: 'chatbot'
             });
